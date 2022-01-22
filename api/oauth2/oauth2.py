@@ -6,12 +6,13 @@ from .. database.database import get_db
 from sqlalchemy.orm import Session
 from .. validators import val_auth
 from .. models import mdl_user
+from .. config import settings
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl='login')
 
-JWT_SECRET_KEY = "SALDKJF90SD8FSDAPIFHAPSD978DSFSDFKLJH445KJH;DSF99780ASDFLH345KJH8DFASD87DFG8GF"
-ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+JWT_SECRET_KEY = settings.JWT_SECRET_KEY
+ALGORITHM = settings.JWT_ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES
 
 
 def create_access_token(data: dict):

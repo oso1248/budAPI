@@ -50,7 +50,7 @@ class CommodityOut(BaseModel):
     unit_of_measurement: str
     note: Optional[cls_universal.UniversalNote] = None
     balance_inactive: confloat(ge=0) = None
-    is_active: bool = True
+    is_active: bool
     created_at: datetime
     updated_at: datetime
     creator: UserInclude

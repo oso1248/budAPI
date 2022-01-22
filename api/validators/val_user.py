@@ -34,7 +34,6 @@ class UserUpdate(BaseModel):
 class UserOut(BaseModel):
     id: int
     name: cls_user.Name
-    username: cls_user.UserName
     is_active: bool = True
     role: cls_user.Role = 'Brewer'
     brewery: cls_user.Brewery = 'FTC'

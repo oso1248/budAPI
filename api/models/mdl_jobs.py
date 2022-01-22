@@ -40,5 +40,7 @@ class BridgeUsersJobs(Base):
     updated_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
 
+    brewer = relationship('Users', foreign_keys=[id_users])
+    job = relationship('Jobs', foreign_keys=[id_jobs])
     creator = relationship('Users', foreign_keys=[created_by])
     updater = relationship('Users', foreign_keys=[updated_by])

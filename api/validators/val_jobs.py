@@ -1,8 +1,17 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
 from datetime import datetime
 from . classes import cls_jobs
 from .val_user import UserInclude
+
+
+class JobInclude(BaseModel):
+    id: int
+    name: cls_jobs.Name
+    area: cls_jobs.Area
+
+    class Config:
+        orm_mode = True
 
 
 class JobCreate(BaseModel):
@@ -29,6 +38,32 @@ class JobOut(BaseModel):
     updated_at: datetime
     creator: UserInclude
     updater: UserInclude
+
+    class Config:
+        orm_mode = True
+
+
+class UserJobAdd(BaseModel):
+    id_users: int
+    id_jobs: int
+    skap: conint(ge=1, le=5)
+
+
+class UserJobUpdateSkap(BaseModel):
+    id_users: int
+    id_jobs: int
+    skap: conint(ge=1, le=5)
+
+
+class UserJobDelete(BaseModel):
+    id_users: int
+    id_jobs: int
+
+
+class UserJobOut(BaseModel):
+    brewer: UserInclude
+    job: JobInclude
+    skap: conint(ge=1, le=5)
 
     class Config:
         orm_mode = True
