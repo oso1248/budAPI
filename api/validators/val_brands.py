@@ -1,8 +1,32 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 from datetime import datetime
 from . classes import cls_universal, cls_brands
 from . val_user import UserInclude
+
+
+class BrandBrewingInclude(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class BrandFinishingInclude(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class BrandPackagingInclude(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
 
 
 # Brand Brewing
@@ -32,6 +56,7 @@ class BrandBrewingMethodsAcx(BaseModel):
 
 class BrandBrewingMethodsAcxOut(BaseModel):
     id: int
+    name: str
     methods_acx: cls_brands.MethodAcx
 
     class Config:
@@ -44,6 +69,17 @@ class BrandBrewingMethodsCsx(BaseModel):
 
 class BrandBrewingMethodsCsxOut(BaseModel):
     id: int
+    name: str
+    methods_csx: cls_brands.MethodCsx
+
+    class Config:
+        orm_mode = True
+
+
+class BrandBrewingMethodsOut(BaseModel):
+    id: int
+    name: str
+    methods_acx: cls_brands.MethodAcx
     methods_csx: cls_brands.MethodCsx
 
     class Config:
@@ -63,14 +99,7 @@ class BrandBrewingOut(BaseModel):
     updated_at: datetime
     creator: UserInclude
     updater: UserInclude
-
-    class Config:
-        orm_mode = True
-
-
-class BrandBrewingInclude(BaseModel):
-    id: int
-    name: str
+    children: List[BrandFinishingInclude]
 
     class Config:
         orm_mode = True
@@ -105,6 +134,7 @@ class BrandFinishingMethodsFilters(BaseModel):
 
 class BrandFinishingMethodsFiltersOut(BaseModel):
     id: int
+    name: str
     methods_filters: cls_brands.MethodFilters
 
     class Config:
@@ -117,6 +147,17 @@ class BrandFinishingMethodsReleasing(BaseModel):
 
 class BrandFinishingMethodsReleasingOut(BaseModel):
     id: int
+    name: str
+    methods_releasing: cls_brands.MethodReleasing
+
+    class Config:
+        orm_mode = True
+
+
+class BrandFinishingMethodsOut(BaseModel):
+    id: int
+    name: str
+    methods_filters: cls_brands.MethodFilters
     methods_releasing: cls_brands.MethodReleasing
 
     class Config:
@@ -132,19 +173,12 @@ class BrandFinishingOut(BaseModel):
     is_organic: bool
     note: cls_universal.UniversalNote
     is_active: bool
-    parent: BrandBrewingInclude
     created_at: datetime
     updated_at: datetime
     creator: UserInclude
     updater: UserInclude
-
-    class Config:
-        orm_mode = True
-
-
-class BrandFinishingInclude(BaseModel):
-    id: int
-    name: str
+    parent: BrandBrewingInclude
+    children: List[BrandPackagingInclude]
 
     class Config:
         orm_mode = True
@@ -173,11 +207,11 @@ class BrandPackagingOut(BaseModel):
     is_organic: bool
     note: cls_universal.UniversalNote
     is_active: bool
-    parent: BrandFinishingInclude
     created_at: datetime
     updated_at: datetime
     creator: UserInclude
     updater: UserInclude
+    parent: BrandFinishingInclude
 
     class Config:
         orm_mode = True

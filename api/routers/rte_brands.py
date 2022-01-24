@@ -7,6 +7,7 @@ from .. validators import val_user, val_brands
 from .. models import mdl_brands
 from .. oauth2.oauth2 import get_current_user
 
+
 router = APIRouter(prefix='/brands', tags=['Brands'])
 
 
@@ -15,44 +16,6 @@ router = APIRouter(prefix='/brands', tags=['Brands'])
 
 
 # Brewing Brands
-# Update Method Acx
-@router.put('/brewing/method/acx/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandBrewingMethodsAcxOut)
-def update_brewing_brand_method_acx(id: int, brand: val_brands.BrandBrewingMethodsAcx, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
-
-    query = db.query(mdl_brands.BrandBrw).filter(
-        mdl_brands.BrandBrw.id == id)
-    update = query.first()
-    if not update:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'brewing brand with id: {id} does not exist')
-
-    new_dict = brand.dict()
-    new_dict['updated_by'] = current_user.id
-    query.update(new_dict, synchronize_session=False)
-    db.commit()
-
-    return query.first()
-
-
-# Update Method Csx
-@router.put('/brewing/method/csx/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandBrewingMethodsCsxOut)
-def update_brewing_brand_method_csx(id: int, brand: val_brands.BrandBrewingMethodsCsx, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
-
-    query = db.query(mdl_brands.BrandBrw).filter(
-        mdl_brands.BrandBrw.id == id)
-    update = query.first()
-    if not update:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'brewing brand with id: {id} does not exist')
-
-    new_dict = brand.dict()
-    new_dict['updated_by'] = current_user.id
-    query.update(new_dict, synchronize_session=False)
-    db.commit()
-
-    return query.first()
-
-
 # Create New Brewing Brand
 @router.post('/brewing', status_code=status.HTTP_201_CREATED, response_model=val_brands.BrandBrewingOut)
 def create_brewing_brand(brand: val_brands.BrandBrewingCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
@@ -102,6 +65,13 @@ def get_brewing_brand(id: int, db: Session = Depends(get_db), current_user: val_
 @router.put('/brewing/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandBrewingOut)
 def update_brewing_brand(id: int, brand: val_brands.BrandBrewingUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
 
+    does_exist_name = db.query(mdl_brands.BrandBrw).filter(
+        mdl_brands.BrandBrw.name == brand.name).first()
+
+    if does_exist_name and does_exist_name.id != id:
+        raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                            detail=f'name: {brand.name} already exists')
+
     query = db.query(mdl_brands.BrandBrw).filter(
         mdl_brands.BrandBrw.id == id)
     update = query.first()
@@ -133,45 +103,58 @@ def delete_brewing_brand(id: int, db: Session = Depends(get_db), current_user: v
     return Response(status_code=status.HTTP_205_RESET_CONTENT)
 
 
+# Update Method Acx
+@router.put('/brewing/method/acx/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandBrewingMethodsAcxOut)
+def update_brewing_brand_method_acx(id: int, brand: val_brands.BrandBrewingMethodsAcx, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+
+    query = db.query(mdl_brands.BrandBrw).filter(
+        mdl_brands.BrandBrw.id == id)
+    update = query.first()
+    if not update:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'brewing brand with id: {id} does not exist')
+
+    new_dict = brand.dict()
+    new_dict['updated_by'] = current_user.id
+    query.update(new_dict, synchronize_session=False)
+    db.commit()
+
+    return query.first()
+
+
+# Update Method Csx
+@router.put('/brewing/method/csx/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandBrewingMethodsCsxOut)
+def update_brewing_brand_method_csx(id: int, brand: val_brands.BrandBrewingMethodsCsx, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+
+    query = db.query(mdl_brands.BrandBrw).filter(
+        mdl_brands.BrandBrw.id == id)
+    update = query.first()
+    if not update:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'brewing brand with id: {id} does not exist')
+
+    new_dict = brand.dict()
+    new_dict['updated_by'] = current_user.id
+    query.update(new_dict, synchronize_session=False)
+    db.commit()
+
+    return query.first()
+
+
+# Return Single Brewing Brand Methods By ID
+@router.get('/brewing/method/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandBrewingMethodsOut)
+def get_brewing_brand_methods(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    print('hello')
+    db_data = db.query(mdl_brands.BrandBrw).filter(
+        mdl_brands.BrandBrw.id == id).first()
+    if not db_data:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'brewing brand with id: {id} does not exist')
+
+    return db_data
+
+
 # Finishing Brands
-# Update Method Filters
-@router.put('/finishing/method/filters/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandFinishingMethodsFiltersOut)
-def update_finishing_brand_method_filters(id: int, brand: val_brands.BrandFinishingMethodsFilters, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
-
-    query = db.query(mdl_brands.BrandFin).filter(
-        mdl_brands.BrandFin.id == id)
-    update = query.first()
-    if not update:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'finishing brand with id: {id} does not exist')
-
-    new_dict = brand.dict()
-    new_dict['updated_by'] = current_user.id
-    query.update(new_dict, synchronize_session=False)
-    db.commit()
-
-    return query.first()
-
-
-# Update Method Releasing
-@router.put('/finishing/method/releasing/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandFinishingMethodsReleasingOut)
-def update_finishing_brand_method_releasing(id: int, brand: val_brands.BrandFinishingMethodsReleasing, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
-
-    query = db.query(mdl_brands.BrandFin).filter(
-        mdl_brands.BrandFin.id == id)
-    update = query.first()
-    if not update:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'finishing brand with id: {id} does not exist')
-
-    new_dict = brand.dict()
-    new_dict['updated_by'] = current_user.id
-    query.update(new_dict, synchronize_session=False)
-    db.commit()
-
-    return query.first()
-
-
 # Create New Finishing Brand
 @router.post('/finishing', status_code=status.HTTP_201_CREATED, response_model=val_brands.BrandFinishingOut)
 def create_finishing_brand(brand: val_brands.BrandFinishingCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
@@ -250,6 +233,57 @@ def delete_finishing_brand(id: int, db: Session = Depends(get_db), current_user:
     db.commit()
 
     return Response(status_code=status.HTTP_205_RESET_CONTENT)
+
+
+# Update Method Filters
+@router.put('/finishing/method/filters/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandFinishingMethodsFiltersOut)
+def update_finishing_brand_method_filters(id: int, brand: val_brands.BrandFinishingMethodsFilters, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+
+    query = db.query(mdl_brands.BrandFin).filter(
+        mdl_brands.BrandFin.id == id)
+    update = query.first()
+    if not update:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'finishing brand with id: {id} does not exist')
+
+    new_dict = brand.dict()
+    new_dict['updated_by'] = current_user.id
+    query.update(new_dict, synchronize_session=False)
+    db.commit()
+
+    return query.first()
+
+
+# Update Method Releasing
+@router.put('/finishing/method/releasing/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandFinishingMethodsReleasingOut)
+def update_finishing_brand_method_releasing(id: int, brand: val_brands.BrandFinishingMethodsReleasing, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+
+    query = db.query(mdl_brands.BrandFin).filter(
+        mdl_brands.BrandFin.id == id)
+    update = query.first()
+    if not update:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'finishing brand with id: {id} does not exist')
+
+    new_dict = brand.dict()
+    new_dict['updated_by'] = current_user.id
+    query.update(new_dict, synchronize_session=False)
+    db.commit()
+
+    return query.first()
+
+
+# Return Single Finishing Brand Method By ID
+@router.get('/finishing/method/{id}', status_code=status.HTTP_200_OK, response_model=val_brands.BrandFinishingMethodsOut)
+def get_finishing_brand(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+
+    db_data = db.query(mdl_brands.BrandFin).filter(
+        mdl_brands.BrandFin.id == id).first()
+    if not db_data:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'finishing brand with id: {id} does not exist')
+
+    return db_data
 
 
 # Packaging Brands

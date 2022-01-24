@@ -32,8 +32,8 @@ class JobOut(BaseModel):
     id: int
     name: cls_jobs.Name
     area: cls_jobs.Area
-    is_active: bool = True
-    is_work_restriction: bool = False
+    is_active: bool
+    is_work_restriction: bool
     created_at: datetime
     updated_at: datetime
     creator: UserInclude
@@ -46,13 +46,13 @@ class JobOut(BaseModel):
 class UserJobAdd(BaseModel):
     id_users: int
     id_jobs: int
-    skap: conint(ge=1, le=5)
+    skap: conint(ge=1, le=6)
 
 
 class UserJobUpdateSkap(BaseModel):
     id_users: int
     id_jobs: int
-    skap: conint(ge=1, le=5)
+    skap: conint(ge=1, le=6)
 
 
 class UserJobDelete(BaseModel):
@@ -63,7 +63,7 @@ class UserJobDelete(BaseModel):
 class UserJobOut(BaseModel):
     brewer: UserInclude
     job: JobInclude
-    skap: conint(ge=1, le=5)
+    skap: conint(ge=1, le=6)
 
     class Config:
         orm_mode = True

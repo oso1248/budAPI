@@ -7,6 +7,7 @@ from .. models import mdl_user
 from .. utils import utils
 from .. oauth2 import oauth2
 
+
 router = APIRouter(tags=['Authentication'])
 
 

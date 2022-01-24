@@ -155,10 +155,16 @@ def get_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserO
 def update_job(id: int, job: val_jobs.JobUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
 
     query = db.query(mdl_jobs.Jobs).filter(mdl_jobs.Jobs.id == id)
-    update = query.first()
-    if not update:
+    does_exist = query.first()
+    if not does_exist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'user with id: {id} does not exist')
+
+    does_exist_name = db.query(mdl_jobs.Jobs).filter(
+        mdl_jobs.Jobs.name == mdl_jobs.Jobs.name).first()
+    if does_exist_name and does_exist_name.id != id:
+        raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                            detail=f'job name: {job.name} already exists')
 
     new_dict = job.dict()
     new_dict['updated_by'] = current_user.id

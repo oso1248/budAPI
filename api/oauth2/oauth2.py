@@ -8,7 +8,9 @@ from .. validators import val_auth
 from .. models import mdl_user
 from .. config import settings
 
+
 oauth2_schema = OAuth2PasswordBearer(tokenUrl='login')
+
 
 JWT_SECRET_KEY = settings.JWT_SECRET_KEY
 ALGORITHM = settings.JWT_ALGORITHM

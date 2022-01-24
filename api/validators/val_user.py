@@ -24,7 +24,6 @@ class UserCreate(BaseModel):
 
 class UserUpdate(BaseModel):
     name: cls_user.Name
-    username: cls_user.UserName
     is_active: bool = True
     role: cls_user.Role = 'Brewer'
     brewery: cls_user.Brewery = 'FTC'
@@ -34,10 +33,10 @@ class UserUpdate(BaseModel):
 class UserOut(BaseModel):
     id: int
     name: cls_user.Name
-    is_active: bool = True
-    role: cls_user.Role = 'Brewer'
-    brewery: cls_user.Brewery = 'FTC'
-    permissions: conint(ge=1, le=6) = 1
+    is_active: bool
+    role: cls_user.Role
+    brewery: cls_user.Brewery
+    permissions: conint(ge=1, le=6)
     created_at: datetime
     updated_at: datetime
     creator: UserInclude

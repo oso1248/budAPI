@@ -6,6 +6,14 @@ from . val_suppliers import SupplierInclude
 from . val_user import UserInclude
 
 
+class CommodityInclude(BaseModel):
+    id: int
+    name_local: cls_commodities.CommoditiesName
+
+    class Config:
+        orm_mode = True
+
+
 class CommodityCreate(BaseModel):
     name_bit: constr(min_length=5, max_length=50)
     name_local: cls_commodities.CommoditiesName

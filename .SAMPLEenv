@@ -1,0 +1,10 @@
+SQLALCHEMY_DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<database name>
+DATABASE_HOST=<host>
+DATABASE_NAME=<database name>
+DATABASE_PORT=<port>
+DATABASE_PASSWORD=<password>
+DATABASE_USERNAME=<username>
+JWT_SECRET_KEY=<secret string> 
+JWT_ALGORITHM=HS256
+JWT_ACCESS_TOKEN_EXPIRE_MINUTES=60
+USER_INSERT=INSERT INTO users (name, username, role, password, created_by, updated_by, brewery, permissions) VALUES ('Admin', 'admin', 'Admin', '$2b$12$uxpquslSDnH4qR/zKdWSEe6Tk5NNAqxZby14HYzDOn86wX2/Z75k2', 1, 1, 'FTC', 6);

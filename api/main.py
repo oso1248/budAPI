@@ -1,23 +1,43 @@
-from fastapi import FastAPI
-from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands
-from .database.database import engine
-from . models import mdl_user, mdl_jobs, mdl_suppliers, mdl_commodities, mdl_brands
+from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands, rte_inv_material
 from . config import settings
+from .metadata import description, tags_metadata
+from .oauth2.oauth2 import get_current_user
+from . validators import val_user
 
 
-mdl_user.Base.metadata.create_all(bind=engine)
-mdl_jobs.Base.metadata.create_all(bind=engine)
-mdl_suppliers.Base.metadata.create_all(bind=engine)
-mdl_commodities.Base.metadata.create_all(bind=engine)
-mdl_brands.Base.metadata.create_all(bind=engine)
+server = FastAPI(
+    title="Bud Brewing API 🇺🇲",
+    description=description,
+    version="0.0.1",
+    terms_of_service="https://github.com/oso1248/budAPI/blob/master/LICENSE",
+    contact={
+        "name": "Adam Coulson",
+        "url": "https://github.com/oso1248/budAPI",
+        "email": "oso1248@gmail.com",
+    },
+    license_info={
+        "name": "MIT License Copyright (c) 2022 Adam Coulson",
+        "url": "https://github.com/oso1248/ftc_brewing/blob/master/LICENSE",
+    }, openapi_tags=tags_metadata
+)
+
+origins = ['*', 'https://www.google.com/']
+
+server.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-server = FastAPI()
-
-
-@server.get("/", tags=['root'], include_in_schema=False)
-def root():
-    return {"root": "API For Fort Collins Budweiser Brewing Department"}
+# Checks If User Is Logged In
+@server.get("/", tags=['Root'], include_in_schema=False)
+def root(current_user: val_user.UserOut = Depends(get_current_user)):
+    return {"root": "Logged In"}
 
 
 server.include_router(rte_auth.router)
@@ -26,3 +46,4 @@ server.include_router(rte_jobs.router)
 server.include_router(rte_suppliers.router)
 server.include_router(rte_commodities.router)
 server.include_router(rte_brands.router)
+server.include_router(rte_inv_material.router)

@@ -27,6 +27,8 @@ class BrandBrw(Base):
 
     creator = relationship('Users', foreign_keys=[created_by])
     updater = relationship('Users', foreign_keys=[updated_by])
+    children = relationship('BrandFin', backref='brand_brewing',
+                            primaryjoin='BrandBrw.id == BrandFin.id_brewing', viewonly=True)
 
 
 class BrandFin(Base):
@@ -56,6 +58,8 @@ class BrandFin(Base):
     parent = relationship('BrandBrw', foreign_keys=[id_brewing])
     creator = relationship('Users', foreign_keys=[created_by])
     updater = relationship('Users', foreign_keys=[updated_by])
+    children = relationship('BrandPck', backref='brand_finishing',
+                            primaryjoin='BrandFin.id == BrandPck.id_finishing', viewonly=True)
 
 
 class BrandPck(Base):

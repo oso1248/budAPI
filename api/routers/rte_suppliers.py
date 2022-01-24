@@ -64,10 +64,16 @@ def update_job(id: int, supplier: val_suppliers.SupplierUpdate, db: Session = De
 
     query = db.query(mdl_suppliers.Suppliers).filter(
         mdl_suppliers.Suppliers.id == id)
-    update = query.first()
-    if not update:
+    does_exist = query.first()
+    if not does_exist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'supplier with id: {id} does not exist')
+
+    does_exist_name = db.query(mdl_suppliers.Suppliers).filter(
+        mdl_suppliers.Suppliers.name == supplier.name).first()
+    if does_exist_name and does_exist_name.id != id:
+        raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                            detail=f'supplier name: {supplier.name} already exists')
 
     new_dict = supplier.dict()
     new_dict['updated_by'] = current_user.id

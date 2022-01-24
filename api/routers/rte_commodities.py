@@ -70,10 +70,22 @@ def update_job(id: int, commodity: val_commodities.CommodityUpdate, db: Session 
 
     query = db.query(mdl_commodities.Commodities).filter(
         mdl_commodities.Commodities.id == id)
-    update = query.first()
-    if not update:
+    does_exist = query.first()
+    if not does_exist:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'commodity with id: {id} does not exist')
+
+    does_exist_name = db.query(mdl_commodities.Commodities).filter(
+        mdl_commodities.Commodities.name_local == commodity.name_local).first()
+    if does_exist_name and does_exist_name.id != id:
+        raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                            detail=f'commodity local: {commodity.name_local} already exists')
+
+    does_exist_name = db.query(mdl_commodities.Commodities).filter(
+        mdl_commodities.Commodities.name_bit == commodity.name_bit).first()
+    if does_exist_name and does_exist_name.id != id:
+        raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                            detail=f'commodity bit: {commodity.name_bit} already exists')
 
     new_dict = commodity.dict()
     new_dict['updated_by'] = current_user.id

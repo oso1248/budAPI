@@ -7,6 +7,7 @@ from .. models import mdl_user
 from .. utils import utils
 from .. oauth2.oauth2 import get_current_user
 
+
 router = APIRouter(prefix='/users', tags=['Users'])
 
 
@@ -34,6 +35,7 @@ def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), curren
 
     db_data = mdl_user.Users(created_by=current_user.id,
                              updated_by=current_user.id, **user.dict())
+
     db.add(db_data)
     db.commit()
     db.refresh(db_data)
@@ -70,17 +72,18 @@ def get_user(id: int, db: Session = Depends(get_db), current_user: val_user.User
 @router.put('/{id}', status_code=status.HTTP_200_OK, response_model=val_user.UserOut)
 def update_user(id: int, user: val_user.UserUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
 
-    does_exist_username = db.query(mdl_user.Users).filter(
-        mdl_user.Users.username == user.username).first()
-    if does_exist_username:
-        raise HTTPException(status_code=status.HTTP_226_IM_USED,
-                            detail=f'username: {user.username} already exists')
-
     query = db.query(mdl_user.Users).filter(mdl_user.Users.id == id)
     update = query.first()
     if not update:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'user with id: {id} does not exist')
+
+    does_exist_name = db.query(mdl_user.Users).filter(
+        mdl_user.Users.name == user.name).first()
+
+    if does_exist_name and does_exist_name.id != id:
+        raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                            detail=f'name: {user.name} already exists')
 
     new_dict = user.dict()
     new_dict['updated_by'] = current_user.id

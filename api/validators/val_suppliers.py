@@ -24,8 +24,6 @@ class SupplierCreate(BaseModel):
     phone: cls_universal.UniversalPhone
     note: Optional[cls_universal.UniversalNote] = None
     is_active: bool = True
-    created_by: Optional[int] = None
-    updated_by: Optional[int] = None
 
 
 class SupplierUpdate(BaseModel):
@@ -35,7 +33,6 @@ class SupplierUpdate(BaseModel):
     phone: cls_universal.UniversalPhone
     note: Optional[cls_universal.UniversalNote] = None
     is_active: bool = True
-    updated_by: Optional[int] = None
 
 
 class SupplierOut(BaseModel):
