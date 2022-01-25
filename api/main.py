@@ -5,6 +5,18 @@ from . config import settings
 from .metadata import description, tags_metadata
 from .oauth2.oauth2 import get_current_user
 from . validators import val_user
+from loguru import logger
+import sys
+
+# logger.remove()
+# logger.add(sys.stdout, colorize=True,
+#            format="<green>{time}</green> <level>{message}</level>", backtrace=False, diagnose=True)
+
+# logger.add("logs/main.log", rotation="2 week",
+#            backtrace=False, diagnose=True)
+
+# logger.add("logs/rte_inv_main.log", rotation="2 week",
+#            backtrace=False, diagnose=True, filter='rte_inv_material.py')
 
 
 server = FastAPI(

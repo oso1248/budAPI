@@ -7,7 +7,6 @@ from .. models import mdl_user
 from .. utils import utils
 from .. oauth2.oauth2 import get_current_user
 
-
 router = APIRouter(prefix='/users', tags=['Users'])
 
 
@@ -18,27 +17,31 @@ router = APIRouter(prefix='/users', tags=['Users'])
 # Create New User
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_user.UserOut)
 def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    try:
+        does_exist_name = db.query(mdl_user.Users).filter(
+            mdl_user.Users.name == user.name).first()
+        if does_exist_name:
+            raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                                detail=f'name: {user.name} already exists')
 
-    does_exist_name = db.query(mdl_user.Users).filter(
-        mdl_user.Users.name == user.name).first()
-    if does_exist_name:
-        raise HTTPException(status_code=status.HTTP_226_IM_USED,
-                            detail=f'name: {user.name} already exists')
+        does_exist_username = db.query(mdl_user.Users).filter(
+            mdl_user.Users.username == user.username).first()
+        if does_exist_username:
+            raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                                detail=f'username: {user.username} already exists')
 
-    does_exist_username = db.query(mdl_user.Users).filter(
-        mdl_user.Users.username == user.username).first()
-    if does_exist_username:
-        raise HTTPException(status_code=status.HTTP_226_IM_USED,
-                            detail=f'username: {user.username} already exists')
+        user.password = utils.hash(user.password)
 
-    user.password = utils.hash(user.password)
+        db_data = mdl_user.Users(created_by=current_user.id,
+                                 updated_by=current_user.id, **user.dict())
 
-    db_data = mdl_user.Users(created_by=current_user.id,
-                             updated_by=current_user.id, **user.dict())
+        db.add(db_data)
+        db.commit()
+        db.refresh(db_data)
 
-    db.add(db_data)
-    db.commit()
-    db.refresh(db_data)
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return db_data
 
@@ -46,11 +49,15 @@ def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), curren
 # Return List Of All Users
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_user.UserOut])
 def get_users(db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    try:
+        db_data = db.query(mdl_user.Users).order_by(mdl_user.Users.name).all()
+        if not db_data:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail='users do not exist')
 
-    db_data = db.query(mdl_user.Users).order_by(mdl_user.Users.name).all()
-    if not db_data:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail='users do not exist')
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return db_data
 
@@ -58,12 +65,16 @@ def get_users(db: Session = Depends(get_db), current_user: val_user.UserOut = De
 # Return Single User By ID
 @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=val_user.UserOut)
 def get_user(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    try:
+        db_data = db.query(mdl_user.Users).filter(
+            mdl_user.Users.id == id).first()
+        if not db_data:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f'user with id: {id} does not exist')
 
-    db_data = db.query(mdl_user.Users).filter(
-        mdl_user.Users.id == id).first()
-    if not db_data:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'user with id: {id} does not exist')
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return db_data
 
@@ -71,24 +82,28 @@ def get_user(id: int, db: Session = Depends(get_db), current_user: val_user.User
 # Update User By ID
 @router.put('/{id}', status_code=status.HTTP_200_OK, response_model=val_user.UserOut)
 def update_user(id: int, user: val_user.UserUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    try:
+        query = db.query(mdl_user.Users).filter(mdl_user.Users.id == id)
+        update = query.first()
+        if not update:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f'user with id: {id} does not exist')
 
-    query = db.query(mdl_user.Users).filter(mdl_user.Users.id == id)
-    update = query.first()
-    if not update:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'user with id: {id} does not exist')
+        does_exist_name = db.query(mdl_user.Users).filter(
+            mdl_user.Users.name == user.name).first()
 
-    does_exist_name = db.query(mdl_user.Users).filter(
-        mdl_user.Users.name == user.name).first()
+        if does_exist_name and does_exist_name.id != id:
+            raise HTTPException(status_code=status.HTTP_226_IM_USED,
+                                detail=f'name: {user.name} already exists')
 
-    if does_exist_name and does_exist_name.id != id:
-        raise HTTPException(status_code=status.HTTP_226_IM_USED,
-                            detail=f'name: {user.name} already exists')
+        new_dict = user.dict()
+        new_dict['updated_by'] = current_user.id
+        query.update(new_dict, synchronize_session=False)
+        db.commit()
 
-    new_dict = user.dict()
-    new_dict['updated_by'] = current_user.id
-    query.update(new_dict, synchronize_session=False)
-    db.commit()
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return query.first()
 
@@ -96,14 +111,18 @@ def update_user(id: int, user: val_user.UserUpdate, db: Session = Depends(get_db
 # Delete User By ID
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    try:
+        query = db.query(mdl_user.Users).filter(mdl_user.Users.id == id)
+        if not query.first():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f'user with id: {id} does not exist')
 
-    query = db.query(mdl_user.Users).filter(mdl_user.Users.id == id)
-    if not query.first():
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'user with id: {id} does not exist')
+        query.delete(synchronize_session=False)
+        db.commit()
 
-    query.delete(synchronize_session=False)
-    db.commit()
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return Response(status_code=status.HTTP_205_RESET_CONTENT)
 

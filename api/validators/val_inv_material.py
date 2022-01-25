@@ -38,7 +38,7 @@ class InvDatesOut(BaseModel):
         orm_mode = True
 
 
-class InvSumOut(BaseModel):
+class InvMaterialSumOut(BaseModel):
     name_local: str
     name_bit: str
     sap: str
@@ -52,7 +52,7 @@ class InvSumOut(BaseModel):
         orm_mode = True
 
 
-class InvCompleteOut(BaseModel):
+class InvMaterialCompleteOut(BaseModel):
     name_local: str
     name_bit: str
     sap: str
