@@ -79,8 +79,8 @@ class BrandBrewingMethodsCsxOut(BaseModel):
 class BrandBrewingMethodsOut(BaseModel):
     id: int
     name: str
-    methods_acx: cls_brands.MethodAcx
-    methods_csx: cls_brands.MethodCsx
+    methods_acx: cls_brands.MethodAcx = None
+    methods_csx: cls_brands.MethodCsx = None
 
     class Config:
         orm_mode = True

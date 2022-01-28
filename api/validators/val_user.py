@@ -44,3 +44,13 @@ class UserOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserPasswordReset(BaseModel):
+    id: int
+    password_reset: cls_user.Password
+
+
+class UserPasswordChange(BaseModel):
+    username: cls_user.UserName
+    password: cls_user.Password

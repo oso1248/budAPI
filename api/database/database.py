@@ -9,6 +9,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+from loguru import logger
+
 SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOST}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -32,5 +34,5 @@ while True:
         cursor = conn.cursor()
         break
     except Exception as error:
-        print('psycopg2 connection fail. Error:', error)
+        logger.error(f'{error}')
         time.sleep(5)

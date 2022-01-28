@@ -6,7 +6,7 @@ description = """
 Options:
 * **Login**
 
-## Users
+## Users 》
 #### Options:
 * Retrieve All Brewers
 * **Admin** Create A Brewer
@@ -14,7 +14,7 @@ Options:
 * **Admin** Update A Brewer
 * **Admin** Delete A Brewer
 
-## Jobs
+## Jobs 》
 #### Options:
 * **Admin** Update Brewer SKAP
 * **Admin** Add Skill To Brewer
@@ -27,7 +27,7 @@ Options:
 * **Admin** Update A Skill
 * **Admin** Delete A Skill
 
-## Suppliers
+## Suppliers 》
 #### Options:
 * Retrieve All Suppliers
 * **Admin** Create A Supplier
@@ -35,7 +35,7 @@ Options:
 * **Admin** Update A Suppliers
 * **Admin** Delete A Suppliers
 
-## Commodities
+## Commodities 》
 #### Options:
 * Retrieve All Commodities
 * **Admin** Create A Commodity
@@ -43,7 +43,7 @@ Options:
 * **Admin** Update A Commodities
 * **Admin** Delete A Commodities
 
-## Brands
+## Brands 》
 #### Options Brewing Brands:
 * Get Brands
 * **Admin** Create Brand
@@ -64,14 +64,21 @@ Options:
 * **Admin** Update Brand Method CSX
 * Get Brand Methods
 
- Options Packaging Brands:
+#### Options Packaging Brands:
 * Get Brands
 * **Admin** Create Brand
 * Get Brand
 * **Admin** Update Brand
 * **Admin** Delete Brand
 
-## Schemas:
+## Options Material Inventory 》
+* Create Entry To Inventory
+* Retrieve Summed Inventory By UUID
+* Retrieve Complete Inventory By UUID
+* Retrieve Inventory Dates
+
+
+## Schemas 》
 * **Create** and **Update** schemas show the structure and data required for input
 * **Out** schemas show the structure and data provided in the output
 * **Include** schemas show the structure and data provided when appended to other outputs

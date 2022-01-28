@@ -30,6 +30,8 @@ def upgrade():
                     sa.Column('brewery', sa.String(), nullable=False),
                     sa.Column('permissions', sa.Integer(), nullable=False),
                     sa.Column('password', sa.String(), nullable=False),
+                    sa.Column('password_reset', sa.String(),
+                              server_default='Empty', nullable=False),
                     sa.Column('is_active', sa.Boolean(),
                               server_default='TRUE', nullable=False),
                     sa.Column('created_by', sa.Integer(), nullable=False),

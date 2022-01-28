@@ -1,23 +1,16 @@
-from fastapi import FastAPI, Depends
-from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands, rte_inv_material
-from . config import settings
+from fastapi.middleware.cors import CORSMiddleware
 from .metadata import description, tags_metadata
 from .oauth2.oauth2 import get_current_user
+from fastapi import FastAPI, Depends
 from . validators import val_user
+from . config import settings
 from loguru import logger
-import sys
 
-# logger.remove()
-# logger.add(sys.stdout, colorize=True,
-#            format="<green>{time}</green> <level>{message}</level>", backtrace=False, diagnose=True)
 
-# logger.add("logs/main.log", rotation="2 week",
-#            backtrace=False, diagnose=True)
-
-# logger.add("logs/rte_inv_main.log", rotation="2 week",
-#            backtrace=False, diagnose=True, filter='rte_inv_material.py')
-
+logger.add("logs/main.log", rotation="2 weeks",
+           backtrace=False, diagnose=True)
 
 server = FastAPI(
     title="Bud Brewing API 🇺🇲",
@@ -47,7 +40,7 @@ server.add_middleware(
 
 
 # Checks If User Is Logged In
-@server.get("/", tags=['Root'], include_in_schema=False)
+@ server.get("/", tags=['Root'], include_in_schema=False)
 def root(current_user: val_user.UserOut = Depends(get_current_user)):
     return {"root": "Logged In"}
 

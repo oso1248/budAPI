@@ -13,6 +13,7 @@ class Users(Base):
     brewery = Column(String, nullable=False)
     permissions = Column(Integer, nullable=False)
     password = Column(String, nullable=False)
+    password_reset = Column(String, server_default='Empty', nullable=False)
     is_active = Column(Boolean, server_default='TRUE', nullable=False)
     created_by = Column(Integer, ForeignKey(
         'users.id', ondelete='CASCADE'), nullable=False)
