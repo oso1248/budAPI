@@ -16,6 +16,7 @@ class Commodities(Base):
     per_pallet = Column(Integer, nullable=False)
     per_unit = Column(Float, nullable=False)
     unit_of_measurement = Column(String, nullable=False)
+    type = Column(String, nullable=True)
     note = Column(String, nullable=True)
     balance_inactive = Column(Float, nullable=True)
     is_active = Column(Boolean, nullable=False)

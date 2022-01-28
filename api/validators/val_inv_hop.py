@@ -1,13 +1,26 @@
 from datetime import datetime, date
-from typing import Optional
-from pydantic import BaseModel, conint, confloat
-from pydantic.types import UUID4
+from typing import Optional, List
+from pydantic import BaseModel, conint, confloat, UUID4
 from . classes import cls_universal
 from . val_user import UserInclude
 from . val_commodities import CommodityInclude
 
 
-class InvMaterialCreate(BaseModel):
+class InvHopLastBrewsIn(BaseModel):
+    bh_1: str
+    bh_2: str
+
+
+class InvHopLastBrewsOut(BaseModel):
+    bh_1: str
+    bh_2: str
+    inv_uuid: UUID4
+
+    class Config:
+        orm_mode = True
+
+
+class InvHopCreate(BaseModel):
     total_pallets: conint(ge=0)
     total_units: confloat(ge=0)
     total_per_unit: confloat(ge=0)
@@ -16,7 +29,7 @@ class InvMaterialCreate(BaseModel):
     id_commodity: int
 
 
-class InvMaterialOut(BaseModel):
+class InvHopOut(BaseModel):
     id: int
     total_pallets: conint(ge=0)
     total_units: confloat(ge=0)
@@ -25,20 +38,21 @@ class InvMaterialOut(BaseModel):
     note: str
     creator: UserInclude
     parent: CommodityInclude
+    lastbrews: InvHopLastBrewsOut
 
     class Config:
         orm_mode = True
 
 
-class InvMaterialDatesOut(BaseModel):
+class InvHopDatesOut(BaseModel):
     inv_date: date
-    inv_uuid: UUID4
+    inv_uuid: str
 
     class Config:
         orm_mode = True
 
 
-class InvMaterialSumOut(BaseModel):
+class InvHopSumOut(BaseModel):
     name_local: str
     name_bit: str
     sap: str
@@ -53,7 +67,8 @@ class InvMaterialSumOut(BaseModel):
         orm_mode = True
 
 
-class InvMaterialCompleteOut(BaseModel):
+class InvHopCompleteOut(BaseModel):
+    id: int
     name_local: str
     name_bit: str
     sap: str

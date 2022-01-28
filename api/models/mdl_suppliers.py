@@ -24,3 +24,5 @@ class Suppliers(Base):
 
     creator = relationship('Users', foreign_keys=[created_by])
     updater = relationship('Users', foreign_keys=[updated_by])
+    children = relationship('Commodities', backref='suppliers',
+                            primaryjoin='Suppliers.id == Commodities.id_supplier', viewonly=True)

@@ -14,3 +14,7 @@ commodity_inventory_regex = re.compile(
 # Limits to Numeric 8 Digits Only
 commodity_sap_regex = re.compile(
     r'^[0-9]{8,8}$')
+
+# Limits to
+commodity_type_regex = re.compile(
+    r'\b(Hop|Addition|Chemical)\b')

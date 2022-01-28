@@ -1,5 +1,5 @@
 import uvicorn
-from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands, rte_inv_material
+from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands, rte_inv_material, rte_inv_hop
 from fastapi.middleware.cors import CORSMiddleware
 from .metadata import description, tags_metadata
 from .oauth2.oauth2 import get_current_user
@@ -52,3 +52,4 @@ server.include_router(rte_suppliers.router)
 server.include_router(rte_commodities.router)
 server.include_router(rte_brands.router)
 server.include_router(rte_inv_material.router)
+server.include_router(rte_inv_hop.router)

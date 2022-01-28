@@ -42,7 +42,7 @@ def create_supplier(supplier: val_suppliers.SupplierCreate, db: Session = Depend
 # Return List Of All Suppliers
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_suppliers.SupplierOut])
 @logger.catch()
-def get_suppliers(active: str = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_suppliers(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         db_data = db.query(mdl_suppliers.Suppliers).filter(mdl_suppliers.Suppliers.is_active == active).order_by(
             mdl_suppliers.Suppliers.name).all()

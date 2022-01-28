@@ -153,7 +153,7 @@ def create_job(job: val_jobs.JobCreate, db: Session = Depends(get_db), current_u
 # Return List Of All Jobs
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_jobs.JobOut])
 @logger.catch()
-def get_jobs(active: str = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_jobs(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         db_data = db.query(mdl_jobs.Jobs).filter(mdl_jobs.Jobs.is_active == active).order_by(
             mdl_jobs.Jobs.area, mdl_jobs.Jobs.name).all()

@@ -9,7 +9,6 @@ from alembic import op
 import sqlalchemy as sa
 
 from sqlalchemy.orm import sessionmaker
-from api.config import settings
 Session = sessionmaker()
 
 # revision identifiers, used by Alembic.

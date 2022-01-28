@@ -43,7 +43,7 @@ def create_brewing_brand(brand: val_brands.BrandBrewingCreate, db: Session = Dep
 # Return List Of All Brewing Brands
 @router.get('/brewing', status_code=status.HTTP_200_OK, response_model=List[val_brands.BrandBrewingOut])
 @logger.catch()
-def get_brewing_brands(active: str = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_brewing_brands(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         db_data = db.query(mdl_brands.BrandBrw).filter(mdl_brands.BrandBrw.is_active == active).order_by(
             mdl_brands.BrandBrw.name).all()
@@ -220,7 +220,7 @@ def create_finishing_brand(brand: val_brands.BrandFinishingCreate, db: Session =
 # Return List Of All Finishing Brands
 @router.get('/finishing', status_code=status.HTTP_200_OK, response_model=List[val_brands.BrandFinishingOut])
 @logger.catch()
-def get_finishing_brands(active: str = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_finishing_brands(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         db_data = db.query(mdl_brands.BrandFin).filter(mdl_brands.BrandFin.is_active == active).order_by(
             mdl_brands.BrandFin.name).all()
@@ -400,7 +400,7 @@ def create_packaging_brand(brand: val_brands.BrandPackagingCreate, db: Session =
 # Return List Of All Packaging Brands
 @router.get('/packaging', status_code=status.HTTP_200_OK, response_model=List[val_brands.BrandPackagingOut])
 @logger.catch()
-def get_packaging_brands(active: str = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_packaging_brands(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         db_data = db.query(mdl_brands.BrandPck).filter(mdl_brands.BrandPck == active).order_by(
             mdl_brands.BrandPck.name).all()

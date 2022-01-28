@@ -24,6 +24,7 @@ class CommodityCreate(BaseModel):
     per_pallet: conint(ge=0)
     per_unit: conint(ge=0)
     unit_of_measurement: str
+    type: cls_commodities.Type
     note: Optional[cls_universal.UniversalNote]
     is_active: bool = True
     id_supplier: int
@@ -39,6 +40,7 @@ class CommodityUpdate(BaseModel):
     per_pallet: conint(ge=0)
     per_unit: conint(ge=0)
     unit_of_measurement: str
+    type: cls_commodities.Type
     note: Optional[cls_universal.UniversalNote] = None
     balance_inactive: confloat(ge=0) = None
     is_active: bool = True
@@ -56,6 +58,7 @@ class CommodityOut(BaseModel):
     per_pallet: conint(ge=0)
     per_unit: conint(ge=0)
     unit_of_measurement: str
+    type: cls_commodities.Type
     note: Optional[cls_universal.UniversalNote] = None
     balance_inactive: confloat(ge=0) = None
     is_active: bool

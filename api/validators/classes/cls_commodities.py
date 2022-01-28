@@ -115,3 +115,32 @@ class Sap(str):
 
     def __repr__(self):
         return f'Role({super().__repr__()})'
+
+
+class Type(str):
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            pattern='\b(Hop|Addition|Chemical)\b',
+            examples='Must Be: Hop|Addition|Chemical',
+        )
+
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, str):
+            raise TypeError('string required')
+        m = regex_commodities.commodity_type_regex.fullmatch(v)
+        print(v)
+        if not m:
+            raise ValueError(
+                'Must Be: Hop|Addition|Chemical')
+
+        return cls(f'{m.group()}')
+
+    def __repr__(self):
+        return f'Role({super().__repr__()})'

@@ -11,6 +11,7 @@ from api.models import mdl_suppliers
 from api.models import mdl_commodities
 from api.models import mdl_brands
 from api.models import mdl_inv_material
+from api.models import mdl_inv_hop
 
 
 # this is the Alembic Config object, which provides

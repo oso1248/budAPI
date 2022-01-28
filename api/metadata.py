@@ -37,7 +37,7 @@ Options:
 
 ## Commodities 》
 #### Options:
-* Retrieve All Commodities
+* Retrieve All Commodities (Search By: active, type, sap)
 * **Admin** Create A Commodity
 * Get A Single Commodity
 * **Admin** Update A Commodities
@@ -45,7 +45,7 @@ Options:
 
 ## Brands 》
 #### Options Brewing Brands:
-* Get Brands
+* Get Brands (Search By: active)
 * **Admin** Create Brand
 * Get Brand
 * **Admin** Update Brand
@@ -55,7 +55,7 @@ Options:
 * Get Brand Methods
 
 #### Options Finishing Brands:
-* Get Brands
+* Get Brands (Search By: active)
 * **Admin** Create Brand
 * Get Brand
 * **Admin** Update Brand
@@ -65,7 +65,7 @@ Options:
 * Get Brand Methods
 
 #### Options Packaging Brands:
-* Get Brands
+* Get Brands (Search By: active)
 * **Admin** Create Brand
 * Get Brand
 * **Admin** Update Brand
@@ -73,10 +73,19 @@ Options:
 
 ## Options Material Inventory 》
 * Create Entry To Inventory
+* Delete Entry From Inventory
 * Retrieve Summed Inventory By UUID
 * Retrieve Complete Inventory By UUID
 * Retrieve Inventory Dates
 
+## Options Hop Inventory 》
+* Create Last Brew Entry To Inventory
+* Delete Last Brew Entry From Inventory (Cascades To Delete Adjacent Hop Inventory)
+* Create Entry To Inventory
+* Delete Entry From Inventory
+* Retrieve Summed Inventory By UUID
+* Retrieve Complete Inventory By UUID
+* Retrieve Inventory Dates
 
 ## Schemas 》
 * **Create** and **Update** schemas show the structure and data required for input
@@ -138,6 +147,14 @@ tags_metadata = [
     {
         "name": "Material Inventory",
         "description": "Material Inventory Endpoints",
+        "externalDocs": {
+            "description": "External Docs",
+            "url": "https://shorturl.at/zGPQR",
+        },
+    },
+    {
+        "name": "Hop Inventory",
+        "description": "Hop Inventory Endpoints",
         "externalDocs": {
             "description": "External Docs",
             "url": "https://shorturl.at/zGPQR",

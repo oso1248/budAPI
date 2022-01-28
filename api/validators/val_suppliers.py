@@ -1,8 +1,17 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from . classes import cls_suppliers, cls_universal
 from . val_user import UserInclude
+from .classes import cls_commodities
+
+
+class CommodityInclude(BaseModel):
+    id: int
+    name_local: cls_commodities.CommoditiesName
+
+    class Config:
+        orm_mode = True
 
 
 class SupplierInclude(BaseModel):
@@ -47,6 +56,7 @@ class SupplierOut(BaseModel):
     updated_at: datetime
     creator: UserInclude
     updater: UserInclude
+    children: List[CommodityInclude]
 
     class Config:
         orm_mode = True

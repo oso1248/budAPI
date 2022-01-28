@@ -50,7 +50,7 @@ def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), curren
 
 # Return List Of All Users
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_user.UserOut])
-def get_users(active: str = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_users(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         db_data = db.query(mdl_user.Users).filter(
             mdl_user.Users.is_active == active).order_by(mdl_user.Users.name).all()
