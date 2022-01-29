@@ -24,6 +24,9 @@ router = APIRouter(prefix='/inventory/hop', tags=['Hop Inventory'])
 @router.post('/lastbrews', status_code=status.HTTP_201_CREATED, response_model=val_inv_hop.InvHopLastBrewsOut)
 @logger.catch()
 def create_entry(brews: val_inv_hop.InvHopLastBrewsIn, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         date_start = ptime.now(tz).start_of('day')
         date_end = ptime.now(tz).end_of('day')
@@ -50,6 +53,9 @@ def create_entry(brews: val_inv_hop.InvHopLastBrewsIn, db: Session = Depends(get
 @router.delete('/lastbrews/{inv_uuid}', status_code=status.HTTP_204_NO_CONTENT)
 @logger.catch()
 def delete_entry(inv_uuid: UUID4, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_inv_hop.InvLastBrews).filter(
             mdl_inv_hop.InvLastBrews.inv_uuid == inv_uuid)
@@ -71,6 +77,9 @@ def delete_entry(inv_uuid: UUID4, db: Session = Depends(get_db), current_user: v
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_inv_hop.InvHopOut)
 @logger.catch()
 def create_entry(commodity: val_inv_hop.InvHopCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         does_exist = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.id == commodity.id_commodity).first()
@@ -104,6 +113,9 @@ def create_entry(commodity: val_inv_hop.InvHopCreate, db: Session = Depends(get_
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 @logger.catch()
 def delete_entry(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_inv_hop.InvHop).filter(
             mdl_inv_hop.InvHop.id == id)

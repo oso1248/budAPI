@@ -24,6 +24,9 @@ router = APIRouter(prefix='/inventory/material', tags=['Material Inventory'])
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_inv_material.InvMaterialOut)
 @logger.catch()
 def create_entry(commodity: val_inv_material.InvMaterialCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 3:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         does_exist = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.id == commodity.id_commodity).first()
@@ -57,6 +60,9 @@ def create_entry(commodity: val_inv_material.InvMaterialCreate, db: Session = De
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 @logger.catch()
 def delete_entry(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 3:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_inv_material.InvMaterial).filter(
             mdl_inv_material.InvMaterial.id == id)

@@ -9,80 +9,82 @@ Options:
 ## Users 》
 #### Options:
 * Retrieve All Brewers
-* **Admin** Create A Brewer
+* **Perm 6** Create A Brewer
 * Get A Single Brewer
-* **Admin** Update A Brewer
+* **Perm 6** Update A Brewer
+* **Perm 5** Reset Brewer Password
+* Change A Reset Password
 * **Admin** Delete A Brewer
 
 ## Jobs 》
 #### Options:
-* **Admin** Update Brewer SKAP
-* **Admin** Add Skill To Brewer
-* **Admin** Delete A Skill From Brewer
+* **Perm 6** Add Skill To Brewer
+* **Perm 6** Update Brewer SKAP
+* **Perm 6** Delete A Skill From Brewer
 * Retrieve A Skill With All Brewers
 * Retrieve A Brewer And Their Skills
 * Retrieve All Skills
-* **Admin** Create Skill
+* **Perm 6** Create Skill
 * Retrieve Single Skill
-* **Admin** Update A Skill
+* **Perm 6** Update A Skill
 * **Admin** Delete A Skill
 
 ## Suppliers 》
 #### Options:
 * Retrieve All Suppliers
-* **Admin** Create A Supplier
+* **Perm 3** Create A Supplier
 * Get A Single Supplier
-* **Admin** Update A Suppliers
+* **Perm 3** Update A Suppliers
 * **Admin** Delete A Suppliers
 
 ## Commodities 》
 #### Options:
 * Retrieve All Commodities (Search By: active, type, sap)
-* **Admin** Create A Commodity
+* **Perm 4** Create A Commodity
 * Get A Single Commodity
-* **Admin** Update A Commodities
+* **Perm 4** Update A Commodities
 * **Admin** Delete A Commodities
 
 ## Brands 》
 #### Options Brewing Brands:
 * Get Brands (Search By: active)
-* **Admin** Create Brand
+* **Perm 6** Create Brand
 * Get Brand
-* **Admin** Update Brand
-* **Admin** Delete Brand
-* **Admin** Update Brand Method ACX
-* **Admin** Update Brand Method CSX
+* **Perm 6** Update Brand
+* **Perm 6** Update Brand Method ACX
+* **Perm 6** Update Brand Method CSX
 * Get Brand Methods
+* **Admin** Delete Brand
 
 #### Options Finishing Brands:
 * Get Brands (Search By: active)
-* **Admin** Create Brand
+* **Perm 6** Create Brand
 * Get Brand
-* **Admin** Update Brand
-* **Admin** Delete Brand
-* **Admin** Update Brand Method ACX
-* **Admin** Update Brand Method CSX
+* **Perm 6** Update Brand
+* **Perm 6** Update Brand Method ACX
+* **Perm 6** Update Brand Method CSX
 * Get Brand Methods
+* **Admin** Delete Brand
 
 #### Options Packaging Brands:
 * Get Brands (Search By: active)
-* **Admin** Create Brand
+* **Perm 6** Create Brand
 * Get Brand
-* **Admin** Update Brand
+* **Perm 6** Update Brand
 * **Admin** Delete Brand
 
 ## Options Material Inventory 》
-* Create Entry To Inventory
-* Delete Entry From Inventory
+* **Perm 3** Create Entry To Inventory
+* **Perm 3** Delete Entry From Inventory
 * Retrieve Summed Inventory By UUID
 * Retrieve Complete Inventory By UUID
 * Retrieve Inventory Dates
 
 ## Options Hop Inventory 》
-* Create Last Brew Entry To Inventory
-* Delete Last Brew Entry From Inventory (Cascades To Delete Adjacent Hop Inventory)
-* Create Entry To Inventory
-* Delete Entry From Inventory
+* **Perm 1** Create Last Brew Entry To Inventory
+* **Perm 1** Delete Last Brew Entry From Inventory (Cascades To Delete Adjacent Hop Inventory)
+* **Perm 1** Create Entry To Inventory
+* **Perm 1** Delete Entry From Inventory
 * Retrieve Summed Inventory By UUID
 * Retrieve Complete Inventory By UUID
 * Retrieve Inventory Dates

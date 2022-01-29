@@ -1,19 +1,19 @@
 from datetime import datetime, date
 from typing import Optional, List
 from pydantic import BaseModel, conint, confloat, UUID4
-from . classes import cls_universal
+from . classes import cls_universal, cls_inv
 from . val_user import UserInclude
 from . val_commodities import CommodityInclude
 
 
 class InvHopLastBrewsIn(BaseModel):
-    bh_1: str
-    bh_2: str
+    bh_1: cls_inv.LastBrew
+    bh_2: cls_inv.LastBrew
 
 
 class InvHopLastBrewsOut(BaseModel):
-    bh_1: str
-    bh_2: str
+    bh_1: cls_inv.LastBrew
+    bh_2: cls_inv.LastBrew
     inv_uuid: UUID4
 
     class Config:

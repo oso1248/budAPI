@@ -1,7 +1,7 @@
 import re
 from passlib.context import CryptContext
-import pendulum as ptime
-tz = ptime.timezone('America/Denver')
+# import pendulum as ptime
+# tz = ptime.timezone('America/Denver')
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
@@ -28,3 +28,11 @@ def convert_phone_number(phone):
 
 def strip_non_numeric(num):
     return re.sub('[^0-9]', '', num)
+
+
+def strip_non_alphanumeric(num):
+    return re.sub('[^A-Za-z0-9]', '', num)
+
+
+def convert_brew_number(brew):
+    return re.sub(r'([A-Z\d]{4})(\d{5})', r'\1 \2', brew)

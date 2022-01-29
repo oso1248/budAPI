@@ -21,6 +21,9 @@ router = APIRouter(prefix='/users', tags=['Users'])
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_user.UserOut)
 @logger.catch()
 def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 6:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         does_exist = db.query(mdl_user.Users).filter(
             mdl_user.Users.name == user.name).first()
@@ -53,7 +56,7 @@ def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), curren
 def get_users(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         db_data = db.query(mdl_user.Users).filter(
-            mdl_user.Users.is_active == active).order_by(mdl_user.Users.name).all()
+            mdl_user.Users.is_active == active, mdl_user.Users.username != 'admin').order_by(mdl_user.Users.name).all()
         if not db_data:
             return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={'detail': f'Key (name)=(all) are not present in table users'})
 
@@ -85,6 +88,9 @@ def get_user(id: int, db: Session = Depends(get_db), current_user: val_user.User
 @router.put('/{id}', status_code=status.HTTP_200_OK, response_model=val_user.UserOut)
 @logger.catch()
 def update_user(id: int, user: val_user.UserUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 6:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_user.Users).filter(mdl_user.Users.id == id)
         does_exist = query.first()
@@ -112,6 +118,9 @@ def update_user(id: int, user: val_user.UserUpdate, db: Session = Depends(get_db
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 @logger.catch()
 def delete_user(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 7:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_user.Users).filter(mdl_user.Users.id == id)
         if not query.first():
@@ -131,6 +140,9 @@ def delete_user(id: int, db: Session = Depends(get_db), current_user: val_user.U
 @router.put('/password/reset', status_code=status.HTTP_200_OK)
 @logger.catch()
 def reset_user_password(user: val_user.UserPasswordReset, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 5:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_user.Users).filter(mdl_user.Users.id == user.id)
         does_exist = query.first()
@@ -141,7 +153,7 @@ def reset_user_password(user: val_user.UserPasswordReset, db: Session = Depends(
 
         new_dict = user.dict()
         new_dict['updated_by'] = current_user.id
-        new_dict['password'] = '$2b$12$uxpquslSDnH4qR/zKdlSEe6Tk5NdAqxZby14H5zDOn86wX2/Z75k1'
+        new_dict['password'] = 'Empty'
         query.update(new_dict, synchronize_session=False)
         db.commit()
 
@@ -153,21 +165,25 @@ def reset_user_password(user: val_user.UserPasswordReset, db: Session = Depends(
 
 
 # Change User Password By username
-@router.put('/password/change', status_code=status.HTTP_200_OK, include_in_schema=False)
+@router.put('/password/change', status_code=status.HTTP_200_OK)
 @logger.catch()
-def change_user_password(user: val_user.UserPasswordChange, db: Session = Depends(get_db)):
+def change_user_password(user_credentials: val_user.UserPasswordChange, db: Session = Depends(get_db)):
     try:
+        print(user_credentials.username)
         query = db.query(mdl_user.Users).filter(
-            mdl_user.Users.username == user.username)
+            mdl_user.Users.username == user_credentials.username)
         does_exist = query.first()
         if not does_exist:
-            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={'detail': 'invalid credentials'})
+            return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'invalid credentials'})
 
-        user.password = utils.hash(user.password)
+        if not utils.verify(user_credentials.password_reset, does_exist.password_reset):
+            return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'invalid credentials'})
 
-        new_dict = user.dict()
-        new_dict['password_reset'] = 'Empty'
-        query.update(new_dict, synchronize_session=False)
+        user_credentials.password = utils.hash(user_credentials.password)
+        user_credentials.password_reset = 'Empty'
+        user_credentials = user_credentials.dict()
+        user_credentials.pop('username')
+        query.update(user_credentials, synchronize_session=False)
         db.commit()
 
     except Exception as error:

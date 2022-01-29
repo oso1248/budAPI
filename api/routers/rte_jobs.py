@@ -20,6 +20,9 @@ router = APIRouter(prefix='/jobs', tags=['Jobs'])
 @router.post('/userjobs', status_code=status.HTTP_201_CREATED, response_model=val_jobs.UserJobOut)
 @logger.catch()
 def add_job_to_user(job: val_jobs.UserJobAdd, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 6:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         does_exist = db.query(mdl_user.Users).filter(
             mdl_user.Users.id == job.id_users).first()
@@ -54,6 +57,9 @@ def add_job_to_user(job: val_jobs.UserJobAdd, db: Session = Depends(get_db), cur
 @router.put('/userjobs', status_code=status.HTTP_200_OK, response_model=val_jobs.UserJobOut)
 @logger.catch()
 def update_skap(job: val_jobs.UserJobUpdateSkap, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 6:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_jobs.BridgeUsersJobs).filter(
             mdl_jobs.BridgeUsersJobs.id_jobs == job.id_jobs, mdl_jobs.BridgeUsersJobs.id_users == job.id_users)
@@ -76,6 +82,9 @@ def update_skap(job: val_jobs.UserJobUpdateSkap, db: Session = Depends(get_db), 
 # Delete Job From User
 @router.delete('/userjobs', status_code=status.HTTP_204_NO_CONTENT)
 def delete_job_from_user(job: val_jobs.UserJobDelete, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 6:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_jobs.BridgeUsersJobs).filter(
             mdl_jobs.BridgeUsersJobs.id_jobs == job.id_jobs, mdl_jobs.BridgeUsersJobs.id_users == job.id_users)
@@ -131,6 +140,9 @@ def get_user_with_jobs(id: int, db: Session = Depends(get_db), current_user: val
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_jobs.JobOut)
 @logger.catch()
 def create_job(job: val_jobs.JobCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 6:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         does_exist_name = db.query(mdl_jobs.Jobs).filter(
             mdl_jobs.Jobs.name == job.name).first()
@@ -188,6 +200,9 @@ def get_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserO
 @router.put('/{id}', status_code=status.HTTP_200_OK, response_model=val_jobs.JobOut)
 @logger.catch()
 def update_job(id: int, job: val_jobs.JobUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 6:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_jobs.Jobs).filter(mdl_jobs.Jobs.id == id)
         does_exist = query.first()
@@ -212,10 +227,13 @@ def update_job(id: int, job: val_jobs.JobUpdate, db: Session = Depends(get_db), 
     return db_data
 
 
-# Delete User By ID
+# Delete Job By ID
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 @logger.catch()
 def delete_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 7:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_jobs.Jobs).filter(mdl_jobs.Jobs.id == id)
         does_exist = query.first()

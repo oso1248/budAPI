@@ -20,6 +20,9 @@ router = APIRouter(prefix='/suppliers', tags=['Suppliers'])
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_suppliers.SupplierOut)
 @logger.catch()
 def create_supplier(supplier: val_suppliers.SupplierCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 3:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         does_exist = db.query(mdl_suppliers.Suppliers).filter(
             mdl_suppliers.Suppliers.name == supplier.name).first()
@@ -77,6 +80,9 @@ def get_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserO
 @router.put('/{id}', status_code=status.HTTP_200_OK, response_model=val_suppliers.SupplierOut)
 @logger.catch()
 def update_job(id: int, supplier: val_suppliers.SupplierUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 3:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_suppliers.Suppliers).filter(
             mdl_suppliers.Suppliers.id == id)
@@ -105,6 +111,9 @@ def update_job(id: int, supplier: val_suppliers.SupplierUpdate, db: Session = De
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 @logger.catch()
 def delete_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 7:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_suppliers.Suppliers).filter(
             mdl_suppliers.Suppliers.id == id)

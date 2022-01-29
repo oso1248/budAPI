@@ -20,6 +20,8 @@ router = APIRouter(prefix='/commodities', tags=['Commodities'])
 @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_commodities.CommodityOut)
 @logger.catch
 def create_commodity(commodity: val_commodities.CommodityCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 4:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
     try:
         does_exist = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.name_local == commodity.name_local).first()
@@ -87,6 +89,8 @@ def get_commodity(id: int, db: Session = Depends(get_db), current_user: val_user
 @router.put('/{id}', status_code=status.HTTP_200_OK, response_model=val_commodities.CommodityOut)
 @logger.catch()
 def update_job(id: int, commodity: val_commodities.CommodityUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 4:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
     try:
         query = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.id == id)
@@ -126,6 +130,9 @@ def update_job(id: int, commodity: val_commodities.CommodityUpdate, db: Session 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 @logger.catch()
 def delete_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 7:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.id == id)

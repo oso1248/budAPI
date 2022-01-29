@@ -36,7 +36,7 @@ class UserOut(BaseModel):
     is_active: bool
     role: cls_user.Role
     brewery: cls_user.Brewery
-    permissions: conint(ge=1, le=6)
+    permissions: int
     created_at: datetime
     updated_at: datetime
     creator: UserInclude
@@ -54,3 +54,4 @@ class UserPasswordReset(BaseModel):
 class UserPasswordChange(BaseModel):
     username: cls_user.UserName
     password: cls_user.Password
+    password_reset: cls_user.Password
