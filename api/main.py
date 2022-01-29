@@ -41,8 +41,8 @@ server.add_middleware(
 
 # Checks If User Is Logged In
 @ server.get("/", tags=['Root'], include_in_schema=False)
-def root(current_user: val_user.UserOut = Depends(get_current_user)):
-    return {"root": "Logged In"}
+def root():
+    return {"root": "Bud API"}
 
 
 server.include_router(rte_auth.router)
