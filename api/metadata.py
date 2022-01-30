@@ -40,9 +40,9 @@ Options:
 ## Commodities 》
 #### Options:
 * Retrieve All Commodities (Search By: active, type, sap)
-* **Perm 4** Create A Commodity
+* **Perm 3** Create A Commodity
 * Get A Single Commodity
-* **Perm 4** Update A Commodities
+* **Perm 3** Update A Commodities
 * **Admin** Delete A Commodities
 
 ## Brands 》
@@ -88,6 +88,15 @@ Options:
 * Retrieve Summed Inventory By UUID
 * Retrieve Complete Inventory By UUID
 * Retrieve Inventory Dates
+
+## Options Manpower 》
+* **Perm 5** Create Individual Entry
+* Get Individual Entries
+* **Perm 5** Delete Individual Entry
+* **Perm 5** Create Group Entry
+* Get Group Entries
+* **Perm 5** Delete Group Entry
+
 
 ## Schemas 》
 * **Create** and **Update** schemas show the structure and data required for input
@@ -157,6 +166,14 @@ tags_metadata = [
     {
         "name": "Hop Inventory",
         "description": "Hop Inventory Endpoints",
+        "externalDocs": {
+            "description": "External Docs",
+            "url": "https://shorturl.at/zGPQR",
+        },
+    },
+    {
+        "name": "Manpower",
+        "description": "Manpower Endpoints",
         "externalDocs": {
             "description": "External Docs",
             "url": "https://shorturl.at/zGPQR",

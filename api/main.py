@@ -1,5 +1,4 @@
-import uvicorn
-from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands, rte_inv_material, rte_inv_hop
+from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands, rte_inv_material, rte_inv_hop, rte_manpower
 from fastapi.middleware.cors import CORSMiddleware
 from .metadata import description, tags_metadata
 from .oauth2.oauth2 import get_current_user
@@ -39,10 +38,17 @@ server.add_middleware(
 )
 
 
-# Checks If User Is Logged In
+# Root
+@logger.catch()
 @ server.get("/", tags=['Root'], include_in_schema=False)
 def root():
     return {"root": "Bud API"}
+
+
+# Checks If User Is Logged In
+@server.get("/logcheck", include_in_schema=False)
+def log_check(current_user: val_user.UserOut = Depends(get_current_user)):
+    return {'detail': 'logged'}
 
 
 server.include_router(rte_auth.router)
@@ -53,3 +59,4 @@ server.include_router(rte_commodities.router)
 server.include_router(rte_brands.router)
 server.include_router(rte_inv_material.router)
 server.include_router(rte_inv_hop.router)
+server.include_router(rte_manpower.router)
