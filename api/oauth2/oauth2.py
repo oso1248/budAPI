@@ -1,10 +1,10 @@
 from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from .. database.database import get_db
 from sqlalchemy.orm import Session
 from .. validators import val_auth
+from jose import JWTError, jwt
 from .. models import mdl_user
 from .. config import settings
 
@@ -23,9 +23,9 @@ def create_access_token(data: dict):
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({'exp': expire})
 
-    encoded_jet = jwt.encode(to_encode, JWT_SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, JWT_SECRET_KEY, algorithm=ALGORITHM)
 
-    return encoded_jet
+    return encoded_jwt
 
 
 def verify_access_token(token: str, credentials_exception):

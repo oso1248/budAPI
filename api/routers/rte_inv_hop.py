@@ -1,11 +1,11 @@
 from fastapi import status, Response, Depends, APIRouter
-from pydantic.types import UUID4
-from .. models import mdl_inv_hop, mdl_commodities
 from .. database.database import cursor, conn, get_db
+from .. models import mdl_inv_hop, mdl_commodities
 from .. validators import val_user, val_inv_hop
 from .. oauth2.oauth2 import get_current_user
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
+from pydantic.types import UUID4
 from loguru import logger
 import pendulum as ptime
 from typing import List

@@ -89,6 +89,9 @@ Options:
 * Retrieve Complete Inventory By UUID
 * Retrieve Inventory Dates
 
+## Options Combined Inventory 》
+* Get Combined Hop And Material Inventories
+
 ## Options Manpower 》
 * **Perm 5** Create Individual Entry
 * Get Individual Entries
@@ -97,9 +100,8 @@ Options:
 * Get Group Entries
 * **Perm 5** Delete Group Entry
 
-
 ## Schemas 》
-* **Create** and **Update** schemas show the structure and data required for input
+* **Create**, **Update** and **In** schemas show the structure and data required for input
 * **Out** schemas show the structure and data provided in the output
 * **Include** schemas show the structure and data provided when appended to other outputs
 
@@ -166,6 +168,14 @@ tags_metadata = [
     {
         "name": "Hop Inventory",
         "description": "Hop Inventory Endpoints",
+        "externalDocs": {
+            "description": "External Docs",
+            "url": "https://shorturl.at/zGPQR",
+        },
+    },
+    {
+        "name": "Combined Inventory",
+        "description": "Combined Inventory Endpoints",
         "externalDocs": {
             "description": "External Docs",
             "url": "https://shorturl.at/zGPQR",
