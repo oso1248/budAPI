@@ -1,7 +1,6 @@
 import re
 from passlib.context import CryptContext
-# import pendulum as ptime
-# tz = ptime.timezone('America/Denver')
+
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
@@ -20,6 +19,10 @@ def titlecase(s):
 
 def uppercase(s):
     return re.sub(r"[A-Za-z]+('[A-Za-z]+)?", lambda word: word.group(0).upper(), s)
+
+
+def lowercase(s):
+    return re.sub(r"[A-Za-z]+('[A-Za-z]+)?", lambda word: word.group(0).lower(), s)
 
 
 def convert_phone_number(phone):

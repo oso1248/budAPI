@@ -9,6 +9,7 @@ from loguru import logger
 from typing import List
 from sqlalchemy import func
 
+
 router = APIRouter(prefix='/commodities', tags=['Commodities'])
 
 
@@ -22,6 +23,7 @@ router = APIRouter(prefix='/commodities', tags=['Commodities'])
 def create_commodity(commodity: val_commodities.CommodityCreate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     if current_user.permissions < 3:
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         does_exist = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.name_local == commodity.name_local).first()
@@ -54,10 +56,13 @@ def create_commodity(commodity: val_commodities.CommodityCreate, db: Session = D
 # Return List Of All Commodities
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_commodities.CommodityOut])
 @logger.catch()
-def get_commodities(active: bool = True, type: str = '', sap: str = '', db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_commodities(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
-        db_data = db.query(mdl_commodities.Commodities).filter(mdl_commodities.Commodities.is_active == active, func.lower(
-            mdl_commodities.Commodities.type).contains(func.lower(type)), mdl_commodities.Commodities.sap.contains(sap)).order_by(mdl_commodities.Commodities.name_local).all()
+        db_data = db.query(mdl_commodities.Commodities).filter(
+            mdl_commodities.Commodities.is_active == active).order_by(mdl_commodities.Commodities.name_local).all()
         if not db_data:
             return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={'detail': f'Key (name)=(all) are not present in table commodities'})
 
@@ -72,6 +77,9 @@ def get_commodities(active: bool = True, type: str = '', sap: str = '', db: Sess
 @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=val_commodities.CommodityOut)
 @logger.catch()
 def get_commodity(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.id == id).first()
@@ -88,7 +96,7 @@ def get_commodity(id: int, db: Session = Depends(get_db), current_user: val_user
 # Update Commodity By ID
 @router.put('/{id}', status_code=status.HTTP_200_OK, response_model=val_commodities.CommodityOut)
 @logger.catch()
-def update_job(id: int, commodity: val_commodities.CommodityUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def update_commodity(id: int, commodity: val_commodities.CommodityUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     if current_user.permissions < 3:
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
     try:

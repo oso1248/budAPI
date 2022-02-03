@@ -1,4 +1,4 @@
-from ... utils.utils import uppercase, strip_non_alphanumeric, convert_brew_number
+from ... utils.utils import uppercase, strip_non_alphanumeric, convert_brew_number, lowercase
 from .. regx import regex_inv
 
 
@@ -26,6 +26,36 @@ class LastBrew(str):
         if not m:
             raise ValueError(
                 'Must Be: LLNN NNNNN')
+
+        return cls(f'{m.group()}')
+
+    def __repr__(self):
+        return f'Role({super().__repr__()})'
+
+
+class HopLot(str):
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            pattern='[^A-Za-z0-9]$',
+            examples='Must Be: Alphanumeric only',
+        )
+
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, str):
+            raise TypeError('string required')
+        v = lowercase(v)
+        v = strip_non_alphanumeric(v)
+        m = regex_inv.inv_hop_lot_regex.fullmatch(v)
+        if not m:
+            raise ValueError(
+                'Must Be: Alphanumeric only')
 
         return cls(f'{m.group()}')
 

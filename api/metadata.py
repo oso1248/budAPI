@@ -3,7 +3,7 @@ description = """
 #### Bud Brewing API Brews Up Some Awesome Stuff 》 
 ## (͡• ͜ʖ ͡•) 🍺🍺🍺 
 ## Authentication
-Options:
+#### Options:
 * **Login**
 
 ## Users 》
@@ -45,8 +45,8 @@ Options:
 * **Perm 3** Update A Commodities
 * **Admin** Delete A Commodities
 
-## Brands 》
-#### Options Brewing Brands:
+## Brewing Brands 》
+#### Options:
 * Get Brands (Search By: active)
 * **Perm 6** Create Brand
 * Get Brand
@@ -56,7 +56,8 @@ Options:
 * Get Brand Methods
 * **Admin** Delete Brand
 
-#### Options Finishing Brands:
+## Finishing Brands 》
+#### Options:
 * Get Brands (Search By: active)
 * **Perm 6** Create Brand
 * Get Brand
@@ -66,21 +67,24 @@ Options:
 * Get Brand Methods
 * **Admin** Delete Brand
 
-#### Options Packaging Brands:
+## Packaging Brands 》
+#### Options:
 * Get Brands (Search By: active)
 * **Perm 6** Create Brand
 * Get Brand
 * **Perm 6** Update Brand
 * **Admin** Delete Brand
 
-## Options Material Inventory 》
+## Material Inventory 》
+#### Options:
 * **Perm 3** Create Entry To Inventory
 * **Perm 3** Delete Entry From Inventory
 * Retrieve Summed Inventory By UUID
 * Retrieve Complete Inventory By UUID
 * Retrieve Inventory Dates
 
-## Options Hop Inventory 》
+## Hop Inventory 》
+#### Options:
 * **Perm 1** Create Last Brew Entry To Inventory
 * **Perm 1** Delete Last Brew Entry From Inventory (Cascades To Delete Adjacent Hop Inventory)
 * **Perm 1** Create Entry To Inventory
@@ -89,10 +93,12 @@ Options:
 * Retrieve Complete Inventory By UUID
 * Retrieve Inventory Dates
 
-## Options Combined Inventory 》
+## Combined Inventory 》
+#### Options:
 * Get Combined Hop And Material Inventories
 
-## Options Manpower 》
+## Manpower 》
+#### Options:
 * **Perm 5** Create Individual Entry
 * Get Individual Entries
 * **Perm 5** Delete Individual Entry
@@ -150,7 +156,23 @@ tags_metadata = [
         },
     },
     {
-        "name": "Brands",
+        "name": "Brewing Brands",
+        "description": "Brand Endpoints",
+        "externalDocs": {
+            "description": "External Docs",
+            "url": "https://shorturl.at/zGPQR",
+        },
+    },
+    {
+        "name": "Finishing Brands",
+        "description": "Brand Endpoints",
+        "externalDocs": {
+            "description": "External Docs",
+            "url": "https://shorturl.at/zGPQR",
+        },
+    },
+    {
+        "name": "Packaging Brands",
         "description": "Brand Endpoints",
         "externalDocs": {
             "description": "External Docs",

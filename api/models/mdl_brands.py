@@ -1,6 +1,7 @@
 from .. database.database import Base
 from sqlalchemy import Column, ForeignKey, Integer, TIMESTAMP, Boolean, String, text
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.sqltypes import JSON
 
 
 class BrandBrw(Base):
@@ -13,8 +14,8 @@ class BrandBrw(Base):
     is_hop_dry = Column(Boolean, nullable=False)
     is_addition = Column(Boolean, nullable=False)
     note = Column(String, nullable=True)
-    methods_acx = Column(String, nullable=True)
-    methods_csx = Column(String, nullable=True)
+    methods_acx = Column(JSON, nullable=True)
+    methods_csx = Column(JSON, nullable=True)
     is_active = Column(Boolean, nullable=False)
     created_by = Column(Integer, ForeignKey(
         'users.id', ondelete='CASCADE'), nullable=False)
@@ -41,8 +42,8 @@ class BrandFin(Base):
     is_bypass = Column(Boolean, nullable=False)
     is_organic = Column(Boolean, nullable=False)
     note = Column(String, nullable=True)
-    methods_filters = Column(String, nullable=True)
-    methods_releasing = Column(String, nullable=True)
+    methods_filters = Column(JSON, nullable=True)
+    methods_releasing = Column(JSON, nullable=True)
     is_active = Column(Boolean, nullable=False)
     id_brewing = Column(Integer, ForeignKey(
         'brand_brewing.id', ondelete='CASCADE'), nullable=False)

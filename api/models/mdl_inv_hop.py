@@ -2,12 +2,12 @@ from sqlalchemy import Column, ForeignKey, Integer, TIMESTAMP, String, text, Num
 from sqlalchemy.dialects.postgresql import UUID
 from .. database.database import Base
 from sqlalchemy.orm import relationship
-import uuid
 
 
 class InvLastBrews(Base):
     __tablename__ = 'inv_last_brews'
-    inv_uuid = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    inv_uuid = Column(UUID(as_uuid=True), primary_key=True,
+                      server_default=text('gen_random_uuid()'))
     bh_1 = Column(String, nullable=False)
     bh_2 = Column(String, nullable=False)
     created_by = Column(Integer, ForeignKey(
@@ -26,6 +26,7 @@ class InvHop(Base):
     total_units = Column(Numeric(scale=2, precision=9), nullable=False)
     total_per_unit = Column(Numeric(scale=2, precision=9), nullable=False)
     total_end = Column(Numeric(scale=2, precision=9), nullable=False)
+    lot_number = Column(String, nullable=False)
     note = Column(String, nullable=True)
     inv_uuid = Column(UUID(as_uuid=True), ForeignKey(
         'inv_last_brews.inv_uuid', ondelete='CASCADE'), nullable=False)

@@ -85,6 +85,9 @@ def delete_entry(id: int, db: Session = Depends(get_db), current_user: val_user.
 @router.get('/read/sum/{inv_uuid}', status_code=status.HTTP_200_OK, response_model=List[val_inv_material.InvMaterialSumOut])
 @logger.catch()
 def get_inv_by_uuid_summed(inv_uuid: str, current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         cursor.execute("""
             SELECT com.name_local, com.name_bit, com.sap, com.inventory, SUM(inv.total_pallets) AS total_pallets, SUM(inv.total_units) AS total_units, SUM(inv.total_end) AS total_end, DATE_TRUNC('day',inv.created_at)::timestamp::date AS inv_date, inv.inv_uuid  
@@ -108,11 +111,15 @@ def get_inv_by_uuid_summed(inv_uuid: str, current_user: val_user.UserOut = Depen
     return inv_material
 
 
-# Get Material Inventory By UUID Summed
+# Get Material Inventory By UUID Complete
 @router.get('/read/complete/{inv_uuid}', status_code=status.HTTP_200_OK, response_model=List[val_inv_material.InvMaterialCompleteOut])
 @logger.catch()
-def get_inv_by_uuid_complete(inv_uuid: str, current_user: val_user.UserOut = Depends(get_current_user)):
+def get_inv_by_uuid_complete(inv_uuid: uuid.UUID, current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
+
         cursor.execute("""
             SELECT com.name_local, com.name_bit, com.sap, com.inventory, inv.total_pallets AS total_pallets, inv.total_units AS total_units, inv.total_end AS total_end, inv.note, use.name, inv.created_at::timestamp(0) AS inv_date, inv_uuid  
             FROM inv_material AS inv
@@ -138,6 +145,9 @@ def get_inv_by_uuid_complete(inv_uuid: str, current_user: val_user.UserOut = Dep
 @router.get('/read/dates', status_code=status.HTTP_200_OK, response_model=List[val_inv_material.InvMaterialDatesOut])
 @logger.catch()
 def get_inv_dates(current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         cursor.execute("""
             SELECT DISTINCT DATE_TRUNC('day',created_at)::timestamp::date AS inv_date, inv_uuid

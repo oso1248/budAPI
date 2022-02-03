@@ -167,7 +167,7 @@ def get_inv_by_uuid_summed(inv_uuid: UUID4, current_user: val_user.UserOut = Dep
 def get_inv_by_uuid_complete(inv_uuid: str, current_user: val_user.UserOut = Depends(get_current_user)):
     try:
         cursor.execute("""
-            SELECT inv.id, com.name_local, com.name_bit, com.sap, com.inventory, inv.total_pallets AS total_pallets, inv.total_units AS total_units, inv.total_end AS total_end, inv.note, use.name, inv.created_at::timestamp(0) AS inv_date, inv.inv_uuid
+            SELECT inv.id, com.name_local, com.name_bit, com.sap, com.inventory, inv.total_pallets, inv.total_units, inv.total_end, inv.lot_number, inv.note, use.name, inv.created_at::timestamp(0) AS inv_date, inv.inv_uuid
             FROM inv_hop AS inv
             JOIN commodities AS com ON inv.id_commodity = com.id
             JOIN users AS use ON inv.created_by = use.id

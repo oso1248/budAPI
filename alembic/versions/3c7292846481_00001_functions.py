@@ -22,7 +22,7 @@ depends_on = None
 def upgrade():
     bind = op.get_bind()
     session = Session(bind=bind)
-
+    # session.execute("SET TIMEZONE = 'America/Denver'")
     session.execute("""
         CREATE OR REPLACE FUNCTION update_timestamp() RETURNS TRIGGER
         LANGUAGE plpgsql
@@ -35,13 +35,10 @@ def upgrade():
         $$;
     """)
 
-    session.execute("SET TIMEZONE = 'America/Denver';")
-
-    pass
+    # session.execute("CREATE EXTENSION IF NOT EXISTS 'uuid-ossp';")
 
 
 def downgrade():
     bind = op.get_bind()
     session = Session(bind=bind)
     session.execute("DROP FUNCTION update_timestamp();")
-    pass

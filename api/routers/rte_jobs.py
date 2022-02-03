@@ -106,6 +106,8 @@ def delete_job_from_user(job: val_jobs.UserJobDelete, db: Session = Depends(get_
 @router.get('/userjobs/jobs/{id}', status_code=status.HTTP_200_OK, response_model=List[val_jobs.UserJobOut])
 @logger.catch()
 def get_job_with_users(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
     try:
         db_data = db.query(mdl_jobs.BridgeUsersJobs).join(
             mdl_user.Users, mdl_user.Users.id == mdl_jobs.BridgeUsersJobs.id_users).order_by(mdl_user.Users.name).filter(mdl_jobs.BridgeUsersJobs.id_jobs == id).all()
@@ -123,6 +125,9 @@ def get_job_with_users(id: int, db: Session = Depends(get_db), current_user: val
 @router.get('/userjobs/users/{id}', status_code=status.HTTP_200_OK, response_model=List[val_jobs.UserJobOut])
 @logger.catch()
 def get_user_with_jobs(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_jobs.BridgeUsersJobs).join(
             (mdl_user.Users, mdl_user.Users.id == mdl_jobs.BridgeUsersJobs.id_users), (mdl_jobs.Jobs, mdl_jobs.Jobs.id == mdl_jobs.BridgeUsersJobs.id_jobs)).order_by(mdl_jobs.Jobs.name).filter(mdl_jobs.BridgeUsersJobs.id_users == id).all()
@@ -166,6 +171,9 @@ def create_job(job: val_jobs.JobCreate, db: Session = Depends(get_db), current_u
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_jobs.JobOut])
 @logger.catch()
 def get_jobs(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_jobs.Jobs).filter(mdl_jobs.Jobs.is_active == active).order_by(
             mdl_jobs.Jobs.area, mdl_jobs.Jobs.name).all()
@@ -183,6 +191,9 @@ def get_jobs(active: bool = True, db: Session = Depends(get_db), current_user: v
 @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=val_jobs.JobOut)
 @logger.catch()
 def get_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_jobs.Jobs).filter(
             mdl_jobs.Jobs.id == id).first()

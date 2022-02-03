@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, constr, conint
+from pydantic import BaseModel, conint
 from datetime import datetime
 from . classes import cls_user
 

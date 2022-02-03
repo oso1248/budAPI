@@ -46,6 +46,9 @@ def create_supplier(supplier: val_suppliers.SupplierCreate, db: Session = Depend
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_suppliers.SupplierOut])
 @logger.catch()
 def get_suppliers(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_suppliers.Suppliers).filter(mdl_suppliers.Suppliers.is_active == active).order_by(
             mdl_suppliers.Suppliers.name).all()
@@ -63,6 +66,9 @@ def get_suppliers(active: bool = True, db: Session = Depends(get_db), current_us
 @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=val_suppliers.SupplierOut)
 @logger.catch()
 def get_job(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_suppliers.Suppliers).filter(
             mdl_suppliers.Suppliers.id == id).first()

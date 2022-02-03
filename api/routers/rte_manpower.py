@@ -41,6 +41,8 @@ def create_individual_entry(job_assignment: val_manpower.ManPowerIndividualIn, d
 @router.get('/individual', status_code=status.HTTP_200_OK, response_model=List[val_manpower.ManPowerIndividualOut])
 @logger.catch()
 def get_individual_entries(dt: val_manpower.ManPowerIndividualDatesIn, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
     try:
         db_data = db.query(mdl_manpower.ManpowerIndividual).filter(
             mdl_manpower.ManpowerIndividual.created_at > dt.start,
@@ -107,6 +109,9 @@ def create_group_entry(group_assignment: val_manpower.ManPowerGroupIn, db: Sessi
 @router.get('/group', status_code=status.HTTP_200_OK, response_model=List[val_manpower.ManPowerGroupOut])
 @logger.catch()
 def get_group_entries(dt: val_manpower.ManPowerGroupDatesIn, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_manpower.ManpowerGroup).filter(
             mdl_manpower.ManpowerGroup.created_at > dt.start,

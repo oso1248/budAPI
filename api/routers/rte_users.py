@@ -37,8 +37,8 @@ def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), curren
 
         user.password = utils.hash(user.password)
 
-        db_data = mdl_user.Users(created_by=current_user.id,
-                                 updated_by=current_user.id, **user.dict())
+        db_data = mdl_user.Users(created_by=1,
+                                 updated_by=1, **user.dict())
 
         db.add(db_data)
         db.commit()
@@ -54,6 +54,9 @@ def create_user(user: val_user.UserCreate, db: Session = Depends(get_db), curren
 # Return List Of All Users
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_user.UserOut])
 def get_users(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         db_data = db.query(mdl_user.Users).filter(
             mdl_user.Users.is_active == active, mdl_user.Users.username != 'admin').order_by(mdl_user.Users.name).all()
@@ -71,6 +74,8 @@ def get_users(active: bool = True, db: Session = Depends(get_db), current_user: 
 @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=val_user.UserOut)
 @logger.catch()
 def get_user(id: int, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+    if current_user.permissions < 1:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
     try:
         db_data = db.query(mdl_user.Users).filter(
             mdl_user.Users.id == id).first()
@@ -106,12 +111,13 @@ def update_user(id: int, user: val_user.UserUpdate, db: Session = Depends(get_db
         new_dict['updated_by'] = current_user.id
         query.update(new_dict, synchronize_session=False)
         db.commit()
+        db_data = query.first()
 
     except Exception as error:
         logger.error(f'{error}')
         return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    return query.first()
+    return db_data
 
 
 # Delete User By ID
@@ -169,7 +175,6 @@ def reset_user_password(user: val_user.UserPasswordReset, db: Session = Depends(
 @logger.catch()
 def change_user_password(user_credentials: val_user.UserPasswordChange, db: Session = Depends(get_db)):
     try:
-        print(user_credentials.username)
         query = db.query(mdl_user.Users).filter(
             mdl_user.Users.username == user_credentials.username)
         does_exist = query.first()
@@ -191,38 +196,3 @@ def change_user_password(user_credentials: val_user.UserPasswordChange, db: Sess
         return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return Response(status_code=status.HTTP_205_RESET_CONTENT)
-
-# psycopg2 routes ###################################################################################
-#
-# @router.post('', status_code=status.HTTP_201_CREATED, response_model=val_user.UserOut)
-# def user_create(user: val_user.UserCreate):
-#     user.created_by = 1
-#     user.updated_by = 1
-#     cursor.execute("""
-#         INSERT INTO users (name, is_active, role, email, brewery, permissions, password, updated_by)
-#         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-#         RETURNING *;
-#     """, (user.name, user.is_active, user.role, user.email, user.brewery, user.permissions, user.password, user.updated_by))
-#     new_user = cursor.fetchone()
-#     conn.commit()
-#     return new_user
-#
-# @router.get('', response_model=List[val_user.UserOut])
-# def get_users():
-#     cursor.execute("""
-#         SELECT * FROM users;
-#     """)
-#     users = cursor.fetchall()
-#     return users
-#
-# @router.get('/{id}', response_model=List[val_user.UserOut])
-# def get_user(id: int):
-#     cursor.execute("""
-#         SELECT * FROM users
-#         WHERE id = %s;
-#     """, (str(id),))
-#     user = cursor.fetchall()
-#     if not user:
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-#                             detail=f'user with id: {id} does not exist')
-#     return user

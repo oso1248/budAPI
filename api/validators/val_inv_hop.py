@@ -25,6 +25,7 @@ class InvHopCreate(BaseModel):
     total_units: confloat(ge=0)
     total_per_unit: confloat(ge=0)
     total_end: confloat(ge=0)
+    lot_number: cls_inv.HopLot
     note: Optional[cls_universal.UniversalNote] = None
     id_commodity: int
 
@@ -35,7 +36,8 @@ class InvHopOut(BaseModel):
     total_units: confloat(ge=0)
     total_per_unit: confloat(ge=0)
     total_end: confloat(ge=0)
-    note: str
+    lot_number: cls_inv.HopLot
+    note: Optional[cls_universal.UniversalNote] = None
     creator: UserInclude
     parent: CommodityInclude
     lastbrews: InvHopLastBrewsOut
@@ -76,7 +78,8 @@ class InvHopCompleteOut(BaseModel):
     total_pallets: conint(ge=0)
     total_units: confloat(ge=0)
     total_end: confloat(ge=0)
-    note: str
+    lot_number: cls_inv.HopLot
+    note: Optional[cls_universal.UniversalNote] = None
     name: str
     inv_date: datetime
     inv_uuid: UUID4

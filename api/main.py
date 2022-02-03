@@ -1,4 +1,4 @@
-from . routers import rte_auth, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_brands, rte_inv_material, rte_inv_hop, rte_inv_combned, rte_manpower
+from . routers import rte_auth, rte_brands_brewing, rte_brands_finishing, rte_brands_packaging, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_inv_material, rte_inv_hop, rte_inv_combned, rte_manpower
 from fastapi.middleware.cors import CORSMiddleware
 from .metadata import description, tags_metadata
 from .oauth2.oauth2 import get_current_user
@@ -56,7 +56,9 @@ server.include_router(rte_users.router)
 server.include_router(rte_jobs.router)
 server.include_router(rte_suppliers.router)
 server.include_router(rte_commodities.router)
-server.include_router(rte_brands.router)
+server.include_router(rte_brands_brewing.router)
+server.include_router(rte_brands_finishing.router)
+server.include_router(rte_brands_packaging.router)
 server.include_router(rte_inv_material.router)
 server.include_router(rte_inv_hop.router)
 server.include_router(rte_inv_combned.router)
