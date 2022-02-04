@@ -41,8 +41,9 @@ class CommoditiesBridge(Base):
 
     id_commodity = Column(Integer, ForeignKey(
         'commodities.id', ondelete='CASCADE'), primary_key=True, nullable=False)
-    id_brand = Column(Integer, ForeignKey(
+    id_brand_brewing = Column(Integer, ForeignKey(
         'brand_brewing.id', ondelete='CASCADE'), primary_key=True, nullable=False)
+    id_brewhouse = Column(Integer, primary_key=True, nullable=False)
     amount_per_brew = Column(Numeric(scale=2, precision=9), nullable=False)
 
     created_by = Column(Integer, ForeignKey(
@@ -54,5 +55,7 @@ class CommoditiesBridge(Base):
     updated_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
 
+    creator = relationship('Users', foreign_keys=[created_by])
+    updater = relationship('Users', foreign_keys=[updated_by])
     commodity = relationship('Commodities', foreign_keys=[id_commodity])
-    brand = relationship('BrandBrw', foreign_keys=[id_brand])
+    brand = relationship('BrandBrw', foreign_keys=[id_brand_brewing])

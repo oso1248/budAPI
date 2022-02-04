@@ -126,8 +126,8 @@ class Type(str):
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(
-            pattern='\b(Hop|Addition|Chemical)\b',
-            examples='Must Be: Hop|Addition|Chemical',
+            pattern='\b(Chemical|Filter|Hop|BH_Injection|FIN_Injection|BK_Addition|MC_Addition)\b',
+            examples='Must Be: Chemical|Filter|Hop|BH_Injection|FIN_Injection|BK_Addition|MC_Addition',
         )
 
     @classmethod
@@ -138,7 +138,7 @@ class Type(str):
         print(v)
         if not m:
             raise ValueError(
-                'Must Be: Hop|Addition|Chemical')
+                'Must Be: Chemical|Filter|Hop|BH_Injection|FIN_Injection|BK_Addition|MC_Addition')
 
         return cls(f'{m.group()}')
 

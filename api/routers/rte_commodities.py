@@ -1,4 +1,4 @@
-from fastapi import status, Response, Depends, APIRouter
+from fastapi import status, Response, Depends, APIRouter, Query
 from .. models import mdl_commodities, mdl_suppliers
 from .. validators import val_user, val_commodities
 from .. oauth2.oauth2 import get_current_user
@@ -7,7 +7,6 @@ from .. database.database import get_db
 from sqlalchemy.orm import Session
 from loguru import logger
 from typing import List
-from sqlalchemy import func
 
 
 router = APIRouter(prefix='/commodities', tags=['Commodities'])
@@ -56,13 +55,18 @@ def create_commodity(commodity: val_commodities.CommodityCreate, db: Session = D
 # Return List Of All Commodities
 @router.get('', status_code=status.HTTP_200_OK, response_model=List[val_commodities.CommodityOut])
 @logger.catch()
-def get_commodities(active: bool = True, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
+def get_commodities(active: bool = True, type: str = Query(None, enum=['Chemical', 'Filter', 'Hop', 'BH_Injection', 'FIN_Injection', 'BK_Addition', 'MC_Addition']), db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     if current_user.permissions < 1:
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
 
     try:
-        db_data = db.query(mdl_commodities.Commodities).filter(
-            mdl_commodities.Commodities.is_active == active).order_by(mdl_commodities.Commodities.name_local).all()
+        if type:
+            db_data = db.query(mdl_commodities.Commodities).filter(mdl_commodities.Commodities.is_active == active,
+                                                                   mdl_commodities.Commodities.type == type).order_by(mdl_commodities.Commodities.name_local).all()
+        else:
+            db_data = db.query(mdl_commodities.Commodities).filter(
+                mdl_commodities.Commodities.is_active == active).order_by(mdl_commodities.Commodities.name_local).all()
+
         if not db_data:
             return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={'detail': f'Key (name)=(all) are not present in table commodities'})
 
@@ -99,6 +103,7 @@ def get_commodity(id: int, db: Session = Depends(get_db), current_user: val_user
 def update_commodity(id: int, commodity: val_commodities.CommodityUpdate, db: Session = Depends(get_db), current_user: val_user.UserOut = Depends(get_current_user)):
     if current_user.permissions < 3:
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={'detail': 'unauthorized'})
+
     try:
         query = db.query(mdl_commodities.Commodities).filter(
             mdl_commodities.Commodities.id == id)

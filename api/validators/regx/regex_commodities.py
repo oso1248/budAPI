@@ -17,4 +17,4 @@ commodity_sap_regex = re.compile(
 
 # Limits to
 commodity_type_regex = re.compile(
-    r'\b(Hop|Addition|Chemical)\b')
+    r'\b(Chemical|Filter|Hop|BH_Injection|FIN_Injection|BK_Addition|MC_Addition)\b')

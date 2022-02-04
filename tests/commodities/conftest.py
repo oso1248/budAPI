@@ -56,7 +56,7 @@ def test_commodity_data(admin_authorized_client, test_supplier_data):
             "per_pallet": 0,
             "per_unit": 0,
             "unit_of_measurement": "string",
-            "type": "Addition",
+            "type": "MC_Addition",
             "note": "Note 2",
             "is_active": True,
             "id_supplier": 1
@@ -94,6 +94,83 @@ def test_commodity_data(admin_authorized_client, test_supplier_data):
     ]
     for commodity in db_data:
         res = admin_authorized_client.post('/commodities', json=commodity)
+        assert res.status_code == 201
+
+    return db_data
+
+
+@pytest.fixture
+def test_brewing_data(admin_authorized_client):
+    data = [
+        {
+            "name": "brw1",
+            "is_organic": False,
+            "is_hop_kettle": True,
+            "is_hop_dry": False,
+            "is_addition": False,
+            "note": "string",
+            "is_active": True
+        },
+        {
+            "name": "brw2",
+            "is_organic": False,
+            "is_hop_kettle": True,
+            "is_hop_dry": False,
+            "is_addition": False,
+            "note": "string",
+            "is_active": True
+        }
+    ]
+    for brand in data:
+        res = admin_authorized_client.post('/brands/brewing', json=brand)
+        assert res.status_code == 201
+
+    return data
+
+
+@pytest.fixture
+def test_commodity_usage_data(admin_authorized_client, test_brewing_data, test_commodity_data):
+    db_data = [
+        {
+            "id_commodity": 1,
+            "id_brand_brewing": 1,
+            "id_brewhouse": 0,
+            "amount_per_brew": 10
+        },
+        {
+            "id_commodity": 2,
+            "id_brand_brewing": 1,
+            "id_brewhouse": 0,
+            "amount_per_brew": 20
+        },
+        {
+            "id_commodity": 3,
+            "id_brand_brewing": 1,
+            "id_brewhouse": 0,
+            "amount_per_brew": 30
+        },
+        {
+            "id_commodity": 4,
+            "id_brand_brewing": 2,
+            "id_brewhouse": 0,
+            "amount_per_brew": 40
+        },
+        {
+            "id_commodity": 1,
+            "id_brand_brewing": 2,
+            "id_brewhouse": 0,
+            "amount_per_brew": 50
+        },
+        {
+            "id_commodity": 2,
+            "id_brand_brewing": 2,
+            "id_brewhouse": 0,
+            "amount_per_brew": 60
+        }
+    ]
+
+    for commodity in db_data:
+        res = admin_authorized_client.post('/commodity/usage', json=commodity)
         assert res.status_code == 201
 
     return db_data

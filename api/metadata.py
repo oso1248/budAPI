@@ -39,11 +39,19 @@ description = """
 
 ## Commodities 》
 #### Options:
-* Retrieve All Commodities (Search By: active, type, sap)
+* Retrieve All Commodities (Search By: active)
 * **Perm 3** Create A Commodity
 * Get A Single Commodity
 * **Perm 3** Update A Commodities
 * **Admin** Delete A Commodities
+
+## Commodity Usage 》
+#### Options:
+* **Perm 6** Update Commodity Usage
+* **Perm 6** Create Commodity Usage
+* **Perm 6** Delete Commodity Usage
+* Get Usage by Commodity
+* Get Usage by Brand
 
 ## Brewing Brands 》
 #### Options:
@@ -119,7 +127,7 @@ tags_metadata = [
         "name": "Authentication",
         "description": "Authentication Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/cmwBS",
         },
     },
@@ -127,7 +135,7 @@ tags_metadata = [
         "name": "Users",
         "description": "Users Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/bzJ15",
         },
     },
@@ -135,7 +143,7 @@ tags_metadata = [
         "name": "Jobs",
         "description": "Skill Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/doOUY",
         },
     },
@@ -143,7 +151,7 @@ tags_metadata = [
         "name": "Suppliers",
         "description": "Supplier Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/oHU29",
         },
     },
@@ -151,7 +159,15 @@ tags_metadata = [
         "name": "Commodities",
         "description": "Commodity Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
+            "url": "https://shorturl.at/ahyK1",
+        },
+    },
+    {
+        "name": "Commodity Usage",
+        "description": "Commodity Usage Endpoints",
+        "externalDocs": {
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/ahyK1",
         },
     },
@@ -159,7 +175,7 @@ tags_metadata = [
         "name": "Brewing Brands",
         "description": "Brand Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/zGPQR",
         },
     },
@@ -167,7 +183,7 @@ tags_metadata = [
         "name": "Finishing Brands",
         "description": "Brand Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/zGPQR",
         },
     },
@@ -175,7 +191,7 @@ tags_metadata = [
         "name": "Packaging Brands",
         "description": "Brand Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/zGPQR",
         },
     },
@@ -183,7 +199,7 @@ tags_metadata = [
         "name": "Material Inventory",
         "description": "Material Inventory Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/zGPQR",
         },
     },
@@ -191,7 +207,7 @@ tags_metadata = [
         "name": "Hop Inventory",
         "description": "Hop Inventory Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/zGPQR",
         },
     },
@@ -199,7 +215,7 @@ tags_metadata = [
         "name": "Combined Inventory",
         "description": "Combined Inventory Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/zGPQR",
         },
     },
@@ -207,7 +223,7 @@ tags_metadata = [
         "name": "Manpower",
         "description": "Manpower Endpoints",
         "externalDocs": {
-            "description": "External Docs",
+            "description": "¿Would You Like To Know More?",
             "url": "https://shorturl.at/zGPQR",
         },
     },

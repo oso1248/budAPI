@@ -100,7 +100,7 @@ def test_update_commodity(authorized_client, test_commodity_data):
         "per_pallet": 0,
         "per_unit": 0,
         "unit_of_measurement": "gallon",
-        "type": "Addition",
+        "type": "MC_Addition",
         "note": "New Note",
         "balance_inactive": 0,
         "is_active": False,
@@ -118,14 +118,14 @@ def test_update_commodity(authorized_client, test_commodity_data):
     assert commodity.per_pallet == 0
     assert commodity.per_unit == 0
     assert commodity.unit_of_measurement == "gallon"
-    assert commodity.type == "Addition"
+    assert commodity.type == "MC_Addition"
     assert commodity.note == "New Note"
     assert commodity.is_active == False
     assert commodity.supplier.id == 2
     assert res.status_code == 200
 
 
-def test_update_commodity(authorized_client_permissions_0):
+def test_update_commodity_empty(authorized_client, test_commodity_data):
     data = {
         "name_bit": "New Name Bit",
         "name_local": "New Name Local",
@@ -136,7 +136,28 @@ def test_update_commodity(authorized_client_permissions_0):
         "per_pallet": 0,
         "per_unit": 0,
         "unit_of_measurement": "gallon",
-        "type": "Addition",
+        "type": "MC_Addition",
+        "note": "New Note",
+        "balance_inactive": 0,
+        "is_active": False,
+        "id_supplier": 2
+    }
+    res = authorized_client.put('/commodities/100', json=data)
+    assert res.status_code == 404
+
+
+def test_update_commodity_unauthorized(authorized_client_permissions_0):
+    data = {
+        "name_bit": "New Name Bit",
+        "name_local": "New Name Local",
+        "location": "Finishing",
+        "sap": "12345678",
+        "inventory": "Log",
+        "threshold": 0,
+        "per_pallet": 0,
+        "per_unit": 0,
+        "unit_of_measurement": "gallon",
+        "type": "MC_Addition",
         "note": "New Note",
         "balance_inactive": 0,
         "is_active": False,

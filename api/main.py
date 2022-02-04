@@ -1,4 +1,6 @@
-from . routers import rte_auth, rte_brands_brewing, rte_brands_finishing, rte_brands_packaging, rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_inv_material, rte_inv_hop, rte_inv_combned, rte_manpower
+from . routers import rte_auth, rte_brands_brewing, rte_brands_finishing, rte_brands_packaging
+from . routers import rte_users, rte_jobs, rte_suppliers, rte_commodities, rte_inv_material
+from . routers import rte_inv_hop, rte_inv_combned, rte_manpower, rte_commodity_usage
 from fastapi.middleware.cors import CORSMiddleware
 from .metadata import description, tags_metadata
 from .oauth2.oauth2 import get_current_user
@@ -23,12 +25,12 @@ server = FastAPI(
     },
     license_info={
         "name": "MIT License Copyright (c) 2022 Adam Coulson",
-        "url": "https://github.com/oso1248/ftc_brewing/blob/master/LICENSE",
-    }, openapi_tags=tags_metadata
+        "url": "https://github.com/oso1248/budAPI/blob/master/LICENSE",
+    }, swagger_ui_parameters={"syntaxHighlight": False}, openapi_tags=tags_metadata, redoc_url=None
 )
 
-origins = ['*', 'https://www.google.com/']
 
+origins = ['*', 'https://www.google.com/']
 server.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -56,6 +58,7 @@ server.include_router(rte_users.router)
 server.include_router(rte_jobs.router)
 server.include_router(rte_suppliers.router)
 server.include_router(rte_commodities.router)
+server.include_router(rte_commodity_usage.router)
 server.include_router(rte_brands_brewing.router)
 server.include_router(rte_brands_finishing.router)
 server.include_router(rte_brands_packaging.router)

@@ -1,0 +1,2455 @@
+{
+	"info": {
+		"_postman_id": "df1a3d2e-06d3-4633-83d3-f8d5c30b8b90",
+		"name": "Bud API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"user one\",\n    \"username\":\"user1\",\n    \"role\":\"Brewer\",\n    \"permissions\":6,\n    \"password\":\"BudAdmin1!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}users",
+							"host": [
+								"{{url}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}users/4",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicGVybWlzc2lvbnMiOjYsImV4cCI6MTY0MjMwMzUxM30.DIWRUGBvACCI-1S39yIbHqUjZenoQ1mC0N2rWBKtHy0",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}users",
+							"host": [
+								"{{url}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"1user\",\n    \"role\":\"Brewer\",\n    \"permissions\":\"4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}users/3",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}users/4",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Password Reset",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":2,\n    \"password_reset\":\"BudAdmin1!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}users/password/reset",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"password",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Password Change",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"meiks\",\n    \"password\":\"BudAdmin1!\",\n    \"password_reset\":\"BudAdmin1!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}users/password/change",
+							"host": [
+								"{{url}}users"
+							],
+							"path": [
+								"password",
+								"change"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "Job Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"fin job 1\",\n    \"area\":\"Finishing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}jobs",
+							"host": [
+								"{{url}}jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}jobs",
+							"host": [
+								"{{url}}jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}jobs/1",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job Update By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"supplier 1 updata\",\n    \"area\":\"Brewhouse\",\n    \"is_active\":\"True\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}jobs/1",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job Delete By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}jobs/6",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Job Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_jobs\":2,\n    \"id_users\":5,\n    \"skap\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}jobs/userjobs",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"userjobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Job Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_jobs\":1,\n    \"id_users\":1,\n    \"skap\":6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}jobs/userjobs",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"userjobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Job Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_jobs\":9,\n    \"id_users\":4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}jobs/userjobs",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"userjobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Job Get All Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}jobs/userjobs/jobs/2",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"userjobs",
+								"jobs",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Job Get All User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}jobs/userjobs/users/5",
+							"host": [
+								"{{url}}jobs"
+							],
+							"path": [
+								"userjobs",
+								"users",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "Suppleir Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Supplier 1\",\n    \"contact\":\"Supplier Contact 1\",\n    \"email\":\"supplier1@email.com\",\n    \"phone\":\"1234567890\",\n    \"note\":\"supplier note\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}suppliers",
+							"host": [
+								"{{url}}suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supplier Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}suppliers",
+							"host": [
+								"{{url}}suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supplier Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}suppliers/2",
+							"host": [
+								"{{url}}suppliers"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supplier Update By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"rachels pussy shop\",\n    \"contact\":\"rachel hinkel\",\n    \"email\":\"rachel@pussy.com\",\n    \"phone\":\"1234567123\",\n    \"is_active\":\"false\",\n    \"note\":\"I have the best pussy and you need it\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}suppliers/2",
+							"host": [
+								"{{url}}suppliers"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supplier Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}suppliers/13",
+							"host": [
+								"{{url}}suppliers"
+							],
+							"path": [
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commodities",
+			"item": [
+				{
+					"name": "Commodity Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name_bit\":\"1 Add\",\n    \"name_local\":\"Add 1\",\n    \"location\":\"Brewhouse\",\n    \"sap\":\"12345678\",\n    \"inventory\":\"Brw\",\n    \"threshold\":1,\n    \"unit_of_measurement\":\"lbs\",\n    \"per_pallet\":\"25\",\n    \"per_unit\":\"44\",\n    \"type\":\"Addition\",\n    \"note\":\"\",\n    \"id_supplier\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}commodities",
+							"host": [
+								"{{url}}commodities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Commodities Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}commodities?type=Addition",
+							"host": [
+								"{{url}}commodities"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Addition"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Commodity Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}commodities/7",
+							"host": [
+								"{{url}}commodities"
+							],
+							"path": [
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Commodity Update By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name_bit\":\"add 2\",\n    \"name_local\":\"2 add\",\n    \"location\":\"Brewhouse\",\n    \"sap\":\"12345678\",\n    \"inventory\":\"Brw\",\n    \"threshold\":1,\n    \"unit_of_measurement\":\"lbs\",\n    \"per_pallet\":\"25\",\n    \"per_unit\":\"44\",\n    \"type\":\"Addition\",\n    \"note\":\"\",\n    \"id_supplier\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}commodities/5",
+							"host": [
+								"{{url}}commodities"
+							],
+							"path": [
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Commodity Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}commodities/6",
+							"host": [
+								"{{url}}commodities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commodity Usage",
+			"item": [
+				{
+					"name": "Create Commodity Usage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_commodity\": 1,\n  \"id_brand_brewing\": 1,\n  \"id_brewhouse\": 2,\n  \"amount_per_brew\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}commodity/usage",
+							"host": [
+								"{{url}}commodity"
+							],
+							"path": [
+								"usage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Usage By Commodity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}commodity/usage/commodity/1",
+							"host": [
+								"{{url}}commodity"
+							],
+							"path": [
+								"usage",
+								"commodity",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Usage By Brand",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}commodity/usage/brand/1",
+							"host": [
+								"{{url}}commodity"
+							],
+							"path": [
+								"usage",
+								"brand",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Commodity Usage",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_commodity\": 1,\n  \"id_brand_brewing\": 1,\n  \"id_brewhouse\": 1,\n  \"amount_per_brew\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}commodity/usage",
+							"host": [
+								"{{url}}commodity"
+							],
+							"path": [
+								"usage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Commodity Usage",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_commodity\": 1,\n  \"id_brand_brewing\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}commodity/usage",
+							"host": [
+								"{{url}}commodity"
+							],
+							"path": [
+								"usage"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{budJWT}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Brand Brewing",
+			"item": [
+				{
+					"name": "Brand Brewing Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"brw2\",\n    \"is_organic\":\"False\",\n    \"is_hop_kettle\":\"True\",\n    \"is_hop_dry\":\"False\",\n    \"is_addition\":\"False\",\n    \"note\":\"\",\n    \"is_active\":\"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/brewing",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Brewing Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/brewing",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Brewing Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/brewing/11",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Brewing Update By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"el20\",\n    \"is_organic\": \"false\",\n    \"is_hop_kettle\": \"true\",\n    \"is_hop_dry\": \"true\",\n    \"is_addition\": \"true\",\n    \"note\": \"test note\",\n    \"is_active\": \"true\"\n \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/brewing/13",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brewing Brand  Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/brewing/9",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Brewing Method Acx",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const acxAsJsonString = {",
+									"    \"methods_acx\": {",
+									"        \"pre\": {",
+									"            \"Vertical Fementer\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            },",
+									"            \"ACX Lines\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            },",
+									"            \"Chip Tank\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            },",
+									"            \"Uni Tank\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            }",
+									"        },",
+									"        \"post\": {",
+									"            \"Vertical Fementer\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            },",
+									"            \"ACX Lines\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            },",
+									"            \"Chip Tank\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            },",
+									"            \"Uni Tank\": {",
+									"                \"method\": \"\",",
+									"                \"note\": \"\"",
+									"            }",
+									"        }",
+									"    }",
+									"",
+									"}",
+									"",
+									"pm.environment.set(",
+									"    'acxAsJsonString',",
+									"    JSON.stringify(JSON.stringify(acxAsJsonString))",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"methods_acx\": {\n        \"pre\": {\n            \"Vertical_Fermenter\": {\"method\":\"pre meht\", \"note\": \"note\"},\n            \"ACX_Lines\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Chip_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"}\n        },\n        \"post\": {\n            \"Vertical_Fermenter\": {\"method\":\"post meth\", \"note\":\"post note\"},\n            \"ACX_Lines\": {\"method\":\"post meth\", \"note\":\"post note\"},\n            \"Chip_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"}\n        }\n    }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/brewing/method/acx/1",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing",
+								"method",
+								"acx",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Brewing Method Csx",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"methods_csx\": {\n        \"pre\": {\n            \"Chip_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Uni_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Train\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Receiver\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Fill_Bank\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Seperators\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"ACP_Addition\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Bypass_Pre_Cooler\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"}\n        },\n        \"post\": {\n            \"Chip_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Uni_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Train\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Receiver\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Fill_Bank\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Seperators\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"ACP_Addition\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Bypass_Pre_Cooler\": {\"method\":\"pre meth\", \"note\":\"pre note\"},\n            \"Schoene_Tank\": {\"method\":\"pre meth\", \"note\":\"pre note\"}\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/brewing/method/csx/1",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing",
+								"method",
+								"csx",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Brewing Methods Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/brewing/method/1",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"brewing",
+								"method",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Brand Finishing",
+			"item": [
+				{
+					"name": "Brand Finishing Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"blhp\",\n    \"is_pre_injection\":\"False\",\n    \"is_post_injection\":\"true\",\n    \"is_bypass\":\"false\",\n    \"is_organic\":\"False\",\n    \"note\":\"\",\n    \"is_active\":\"True\",\n    \"id_brewing\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/finishing",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Finishing Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/finishing",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Finishing Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/finishing/25",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Finishing Update By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"elsp\",\n    \"is_pre_injection\":\"False\",\n    \"is_post_injection\":\"False\",\n    \"is_bypass\":\"true\",\n    \"is_organic\":\"False\",\n    \"note\":\"\",\n    \"methods_filters\":\"\",\n    \"methods_releasing\":\"\",\n    \"is_active\":\"false\",\n    \"id_brewing\":13\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/finishing/25",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Finishing Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/finishing/1",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Finishing Method Filters",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"methods_filters\": {\n    \"pre\": {\n      \"Schoene_Tank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Schoene_Release_Bank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Balance_Tanks\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Trap_Filter\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter_Beer_Supply_Bank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter_Beer_Tank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter_Control\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Brand_Changes\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Post_Injection\": [\n        {\n          \"Ingredient_1\": {\n            \"method\": \"string\",\n            \"note\": \"string\"\n          },\n          \"Ingredient_2\": {\n            \"method\": \"string\",\n            \"note\": \"string\"\n          },\n          \"Ingredient_3\": {\n            \"method\": \"string\",\n            \"note\": \"string\"\n          }                                       \n        }\n      ]\n    },\n    \"post\": {\n      \"Schoene_Tank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Schoene_Release_Bank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Balance_Tanks\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Trap_Filter\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter_Beer_Supply_Bank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter_Beer_Tank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Filter_Control\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Brand_Changes\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Beer_recovery\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/finishing/method/filters/1",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing",
+								"method",
+								"filters",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Finishing Method Releasing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"methods_releasing\": {\n    \"pre\": {\n      \"Filter_Beer_Tank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Release_Bank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Package_Line\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Draught_Line\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Release_Control\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Beer_Recovery\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      }\n    },\n    \"post\": {\n      \"Filter_Beer_Tank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Release_Bank\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Package_Line\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Draught_Line\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Release_Control\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      },\n      \"Beer_Recovery\": {\n        \"method\": \"string\",\n        \"note\": \"string\"\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/finishing/method/releasing/1",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing",
+								"method",
+								"releasing",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Finishing Methods Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/finishing/method/1",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"finishing",
+								"method",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Brand Packaging",
+			"item": [
+				{
+					"name": "Brand Packaging Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"es18\",\n    \"is_organic\":\"false\",\n    \"note\":\"\",\n    \"is_active\":\"true\",\n    \"id_finishing\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/packaging",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"packaging"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Packaging Ger All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/packaging",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"packaging"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Packaging Get By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/packaging/4",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"packaging",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Packaging Update BY ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"bud5\",\n    \"is_organic\":\"False\",\n    \"note\":\"\",\n    \"is_active\":\"True\",\n    \"id_finishing\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}brands/packaging/4",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"packaging",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Brand Packaging Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}brands/packaging/4",
+							"host": [
+								"{{url}}brands"
+							],
+							"path": [
+								"packaging",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory Material",
+			"item": [
+				{
+					"name": "Inv Material Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total_pallets\":1,\n    \"total_units\":0,\n    \"total_per_unit\":44,\n    \"total_end\":1100,\n    \"note\":\"\",\n    \"id_commodity\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}inventory/material",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"material"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inv Material Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/material/4",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"material",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inv Material Dates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/material/read/dates",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"material",
+								"read",
+								"dates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inv Material By UUID Sum",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/material/read/sum/2551f3d0-7eb6-440c-a214-b9c359af1f0c",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"material",
+								"read",
+								"sum",
+								"2551f3d0-7eb6-440c-a214-b9c359af1f0c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inv Material By UUID Complete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/material/read/complete/2551f3d0-7eb6-440c-a214-b9c359af1f0c",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"material",
+								"read",
+								"complete",
+								"2551f3d0-7eb6-440c-a214-b9c359af1f0c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory Hop",
+			"item": [
+				{
+					"name": "Inv Hop Last Brews Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bh_1\":\"bh40.12345\",\n    \"bh_2\":\"bh50 54321\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}inventory/hop/lastbrews",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"hop",
+								"lastbrews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inv Hop Last Brews Delete By UUID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/hop/lastbrews/58f1dc4b-c582-420c-b597-042c9aba019",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"hop",
+								"lastbrews",
+								"58f1dc4b-c582-420c-b597-042c9aba019"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inv Hop Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total_pallets\":0,\n    \"total_units\":20,\n    \"total_per_unit\":44,\n    \"total_end\":880,\n    \"lot_number\":\"jkd789dfg\",\n    \"note\":\"\",\n    \"id_commodity\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}inventory/hop",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"hop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inv Hop Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/hop/9",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"hop",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inv Hop Dates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/hop/read/dates",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"hop",
+								"read",
+								"dates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inv Hop By UUID Sum",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/hop/read/sum/7199b719-d849-4d73-b964-1440994df574",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"hop",
+								"read",
+								"sum",
+								"7199b719-d849-4d73-b964-1440994df574"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Inv Hop By UUID Complete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}inventory/hop/read/complete/7199b719-d849-4d73-b964-1440994df574",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"hop",
+								"read",
+								"complete",
+								"7199b719-d849-4d73-b964-1440994df574"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory Combined",
+			"item": [
+				{
+					"name": "Get Inv Combined By UUID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uuid_hop\":\"141ebe2f-3412-4835-aad7-181535905576\",\n    \"uuid_material\":\"c216f8e7-b435-485b-a005-c88f4ee94c1d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}inventory/combined",
+							"host": [
+								"{{url}}inventory"
+							],
+							"path": [
+								"combined"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manpower",
+			"item": [
+				{
+					"name": "Manpower Create Individual",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shift\":1,\n    \"id_users\":3,\n    \"id_jobs\":2,\n    \"note\":\"flick that tounge on them pussy lips\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}manpower/individual",
+							"host": [
+								"{{url}}manpower"
+							],
+							"path": [
+								"individual"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manpower Get All Individual",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"start\":\"2022-1-29 04:00\",\n    \"stop\":\"2022-1-30 04:00\",\n    \"shift\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}manpower/individual",
+							"host": [
+								"{{url}}manpower"
+							],
+							"path": [
+								"individual"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manpower Delete individual By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}manpower/individual/1",
+							"host": [
+								"{{url}}manpower"
+							],
+							"path": [
+								"individual",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manpower Create Group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shift\":2,\n    \"note\":\"gang bang maria tonight\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}manpower/group",
+							"host": [
+								"{{url}}manpower"
+							],
+							"path": [
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manpower Get All Group",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"start\":\"2022-1-29 04:00\",\n    \"stop\":\"2022-1-30 04:00\",\n    \"shift\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}manpower/group",
+							"host": [
+								"{{url}}manpower"
+							],
+							"path": [
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manpower Delete Group By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{budJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}manpower/group/1",
+							"host": [
+								"{{url}}manpower"
+							],
+							"path": [
+								"group",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"budJWT\", pm.response.json().access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "meiks",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "BudAdmin1!",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}login",
+					"host": [
+						"{{url}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log Check",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{budJWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}logcheck",
+					"host": [
+						"{{url}}logcheck"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

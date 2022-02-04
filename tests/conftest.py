@@ -80,6 +80,7 @@ def test_user_permissions_0(admin_authorized_client):
     new_user = res.json()
     new_user['password'] = user_data['password']
     new_user['username'] = user_data['username']
+    new_user['permissions'] = user_data['permissions']
     assert res.status_code == 201
     return new_user
 
